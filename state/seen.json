@@ -1,0 +1,212 @@
+{
+"discovery": {
+"Abnormal Security": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 89,
+"slug": "abnormalsecurity"
+},
+"Arcesium": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Atlassian": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"BrowserStack": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"CRED": {
+"ats": "lever",
+"checked": "2026-11-13",
+"count": 15,
+"slug": "cred"
+},
+"Cloudflare": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 479,
+"slug": "cloudflare"
+},
+"Cohesity": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Coinbase": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 268,
+"slug": "coinbase"
+},
+"Confluent": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Databricks": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 909,
+"slug": "databricks"
+},
+"Datadog": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 386,
+"slug": "datadog"
+},
+"Druva": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 27,
+"slug": "druva"
+},
+"Elastic": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 399,
+"slug": "elastic"
+},
+"Freshworks": {
+"ats": "smartrecruiters",
+"checked": "2026-11-13",
+"count": 32,
+"slug": "freshworks"
+},
+"GitLab": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 251,
+"slug": "gitlab"
+},
+"Gong": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Grab": {
+"ats": "smartrecruiters",
+"checked": "2026-11-13",
+"count": 10,
+"slug": "grab"
+},
+"Groww": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 9,
+"slug": "groww"
+},
+"Harness": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Intuit": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Meesho": {
+"ats": "lever",
+"checked": "2026-11-13",
+"count": 49,
+"slug": "meesho"
+},
+"MongoDB": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 387,
+"slug": "mongodb"
+},
+"Nutanix": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Okta": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 360,
+"slug": "okta"
+},
+"PhonePe": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Postman": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Razorpay": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Rippling": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Rubrik": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 182,
+"slug": "rubrik"
+},
+"ServiceNow": {
+"ats": "smartrecruiters",
+"checked": "2026-11-13",
+"count": 82,
+"slug": "servicenow"
+},
+"Snowflake": {
+"ats": "ashby",
+"checked": "2026-11-13",
+"count": 375,
+"slug": "snowflake"
+},
+"Sprinklr": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Stripe": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 785,
+"slug": "stripe"
+},
+"Tekion": {
+"ats": "ashby",
+"checked": "2026-11-13",
+"count": 90,
+"slug": "tekion"
+},
+"ThoughtSpot": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Twilio": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 115,
+"slug": "twilio"
+},
+"Uber": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Visa": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Wise": {
+"ats": "smartrecruiters",
+"checked": "2026-11-13",
+"count": 28,
+"slug": "wise"
+},
+"Zscaler": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 375,
+"slug": "zscaler"
+}
+},
+"seeded": [],
+"seen": {}
+}
