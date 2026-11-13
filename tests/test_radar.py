@@ -29,7 +29,10 @@ NOW = datetime.now(timezone.utc)
     ("Principal Engineer, Backend", False),
     ("Software Engineering Manager", False),
     ("SDE III", False),
-    ("Software Engineer 3", False),
+    ("SDE-3, Payments", False),
+    ("Software Engineer III, Google Cloud", True),   # Google L4 / Walmart SE III ≈ 2–4 yrs
+    ("Software Engineer IV", False),
+    ("Software Engineer 5", False),
     ("Frontend Engineer", False),
     ("Software Engineer in Test", False),
     ("Software Engineering Intern", False),
@@ -180,3 +183,58 @@ def test_gemini_threshold(env, monkeypatch):
 def test_format():
     t, m = notify.format_job(mk(1), {"score": 9, "years": "2-4 yrs", "why": "Java + Kafka"})
     assert t.startswith("🔥 Acme") and "9/10" in m and "min ago" in m
+
+
+# ---------- fixes from the first live validate ----------
+
+def test_rippling(monkeypatch):
+    monkeypatch.setattr(http, "get_json", lambda url, params=None, timeout=0: {"items": [
+        {"id": "5eb7", "name": "Software Engineer II", "workLocations": ["Bangalore, India"],
+         "url": "https://ats.rippling.com/rippling/jobs/5eb7"}], "totalPages": 1})
+    [j] = sources.fetch_rippling("Rippling", "rippling")
+    assert j.uid == "rippling:rippling:5eb7" and location_verdict(j) == "yes"
+
+
+def test_discovery_error_is_not_cached_as_not_found(monkeypatch):
+    import requests
+    def boom(company, slug, **_):
+        r = requests.Response(); r.status_code = 429
+        raise requests.HTTPError(response=r)
+    for ats in sources.DISCOVERABLE:
+        monkeypatch.setitem(sources.FETCHERS, ats, boom)
+    with pytest.raises(sources.DiscoveryError):
+        sources.discover("PhonePe")
+
+
+def test_discovery_404_everywhere_is_not_found(monkeypatch):
+    def nf(company, slug, **_):
+        raise http.NotFound(slug)
+    for ats in sources.DISCOVERABLE:
+        monkeypatch.setitem(sources.FETCHERS, ats, nf)
+    assert sources.discover("Nobody Inc") is None
+
+
+def test_old_not_found_entries_are_rechecked(tmp_path):
+    from radar.state import State
+    p = tmp_path / "s.json"
+    p.write_text(json.dumps({"seen": {}, "seeded": [], "discovery": {
+        "PhonePe": {"ats": None, "checked": "2026-11-13"},
+        "Stripe": {"ats": "greenhouse", "slug": "stripe", "count": 785, "checked": "2026-11-13"}}}))
+    s = State(p)
+    assert s.discovery("PhonePe") is None and s.discovery("Stripe")["slug"] == "stripe"
+
+
+def test_workday_422_falls_back(monkeypatch):
+    import requests
+    calls = []
+    def post(url, payload, headers=None, timeout=0):
+        calls.append(payload["searchText"])
+        if payload["searchText"] == "software engineer india":
+            r = requests.Response(); r.status_code = 422
+            raise requests.HTTPError(response=r)
+        return {"jobPostings": [{"title": "Software Engineer III", "externalPath": "/job/x/R1",
+                                 "locationsText": "Bangalore, India", "postedOn": "Posted Today", "bulletFields": ["R1"]}]}
+    monkeypatch.setattr(http, "post_json", post)
+    jobs = sources.fetch_workday("Walmart", host="walmart.wd5.myworkdayjobs.com", tenant="walmart",
+                                 site="WalmartExternal", search="software engineer india", pages=1)
+    assert calls == ["software engineer india", "software engineer"] and jobs[0].job_id == "R1"

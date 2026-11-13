@@ -39,20 +39,20 @@ def resolve_sources(watch: dict, state: State, force_discover: bool = False) -> 
     pinned_names = {e["name"].lower() for e in srcs}
     names = [n for n in (watch.get("auto") or []) if n.lower() not in pinned_names]
 
-    to_probe = [n for n in names if force_discover or state.discovery_stale(n)]
+    to_probe = [n for n in names if state.discovery_stale(n)]
     if not force_discover:
         to_probe = to_probe[:DISCOVERIES_PER_RUN]
     if to_probe:
         log.info("discovering %d companies…", len(to_probe))
-        with ThreadPoolExecutor(16) as ex:
+        with ThreadPoolExecutor(8) as ex:   # gentle: too many parallel probes get rate-limited
             futs = {ex.submit(sources.discover, n): n for n in to_probe}
             for f in as_completed(futs):
                 n = futs[f]
                 try:
                     res = f.result()
-                except Exception as e:
-                    log.warning("discover %s crashed: %s", n, e)
-                    res = None
+                except Exception as e:      # rate-limited / timed out: try again next run, don't cache
+                    log.warning("  %-22s → retry later (%s)", n, e)
+                    continue
                 state.set_discovery(n, res)
                 log.info("  %-22s → %s", n, f"{res['ats']}/{res['slug']} ({res['count']} jobs)" if res else "not found")
 
@@ -182,7 +182,7 @@ def cmd_run() -> int:
 def cmd_validate() -> int:
     watch, filt, _ = load_config()
     state = State(STATE_PATH)
-    srcs, unresolved = resolve_sources(watch, state, force_discover=False)
+    srcs, unresolved = resolve_sources(watch, state, force_discover=True)
     results, errors = fetch_all(srcs)
     title_ok = TitleFilter(filt.get("title_include", []), filt.get("title_exclude", []))
     rows = ["| Company | Board | Open roles | Relevant now (title + India) |", "|---|---|---|---|"]
@@ -195,9 +195,13 @@ def cmd_validate() -> int:
         jobs = results.get(key, [])
         rel = sum(1 for j in jobs if title_ok.ok(j.title) and location_verdict(j) in ("yes", "unknown", "maybe"))
         rows.append(f"| {s['name']} | {board} | {len(jobs)} | {rel} |")
-    if unresolved:
-        rows.append("\n**Not found on Greenhouse/Lever/Ashby/SmartRecruiters** (pin them in watchlist.yaml if you know the board): "
-                    + ", ".join(unresolved))
+    not_found = [n for n in unresolved if state.discovery(n)]
+    retry = [n for n in unresolved if not state.discovery(n)]
+    if not_found:
+        rows.append("\n**Not on Greenhouse/Lever/Ashby/SmartRecruiters/Rippling** (pin them in watchlist.yaml if you know the board): "
+                    + ", ".join(not_found))
+    if retry:
+        rows.append("\n**Couldn't check yet (rate-limited/timeouts) — will retry automatically:** " + ", ".join(retry))
     state.save()
     _emit("\n".join(rows))
     return 1 if errors and len(errors) == len(srcs) else 0

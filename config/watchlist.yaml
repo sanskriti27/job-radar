@@ -25,6 +25,12 @@ pinned:
   - {name: Mastercard, ats: workday, host: mastercard.wd1.myworkdayjobs.com,  tenant: mastercard, site: CorporateCareers, search: "software engineer india"}
   - {name: Target,     ats: workday, host: target.wd5.myworkdayjobs.com,      tenant: target,     site: targetcareers, search: "software engineer india"}
 
+  # --- boards whose name doesn't match the company name ------------------------------------
+  - {name: Razorpay, ats: greenhouse, slug: razorpaysoftwareprivatelimited}
+  - {name: PhonePe,  ats: greenhouse, slug: phonepe}
+  - {name: Postman,  ats: greenhouse, slug: postman}
+  - {name: Rippling, ats: rippling,   slug: rippling}
+
 auto:
   # Global product companies with big India engineering teams
   - Atlassian

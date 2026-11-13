@@ -186,8 +186,17 @@ def fetch_workday(company: str, host: str, tenant: str, site: str, search: str =
     base = f"https://{host}/wday/cxs/{tenant}/{site}"
     jobs = []
     for page in range(pages):
-        data = http.post_json(f"{base}/jobs", {"appliedFacets": {}, "limit": 20, "offset": page * 20,
-                                               "searchText": search})
+        data = None
+        # Some Workday sites reject certain search strings with 422; fall back to simpler searches.
+        for text in dict.fromkeys([search, re.sub(r"\s*india\s*", " ", search, flags=re.I).strip(), ""]):
+            try:
+                data = http.post_json(f"{base}/jobs", {"appliedFacets": {}, "limit": 20, "offset": page * 20,
+                                                       "searchText": text})
+                search = text
+                break
+            except Exception as e:
+                if getattr(getattr(e, "response", None), "status_code", None) != 422 or text == "":
+                    raise
         postings = (data or {}).get("jobPostings", [])
         for j in postings:
             path = j.get("externalPath", "")
@@ -295,6 +304,49 @@ def fetch_google(company: str = "Google", search: str = "software engineer", **_
     return jobs
 
 
+# ---------- Rippling ATS (ats.rippling.com; used by Rippling and many startups) ----------
+
+def fetch_rippling(company: str, slug: str, **_) -> list[Job]:
+    jobs, page = [], 0
+    while page < 20:
+        data = http.get_json(f"https://ats.rippling.com/api/v2/board/{slug}/jobs", params={"page": page, "pageSize": 100})
+        items = data if isinstance(data, list) else (
+            data.get("items") or data.get("results") or data.get("jobs") or data.get("data") or [])
+        for j in items:
+            jid = str(j.get("id") or j.get("uuid") or "")
+            if not jid:
+                continue
+            locs = j.get("workLocations") or j.get("locations") or []
+            if isinstance(locs, dict):
+                locs = [locs]
+            locs = [l.get("name") or l.get("label") or "" if isinstance(l, dict) else str(l) for l in locs]
+            jobs.append(Job(
+                source="rippling", company=company, job_id=jid,
+                title=(j.get("name") or j.get("title") or "").strip(),
+                location=" | ".join(l for l in locs if l),
+                url=j.get("url") or f"https://ats.rippling.com/{slug}/jobs/{jid}",
+                remote=any("remote" in l.lower() for l in locs) or None,
+                posted_at=parse_iso(j.get("createdOn") or j.get("publishedAt") or j.get("created_at")),
+                extra={"slug": slug},
+            ))
+        total_pages = data.get("totalPages") if isinstance(data, dict) else None
+        page += 1
+        if not items or not total_pages or page >= total_pages:
+            break
+    return jobs
+
+
+def _enrich_rippling(job: Job) -> None:
+    d = http.get_json(f"https://ats.rippling.com/api/v2/board/{job.extra['slug']}/jobs/{job.job_id}")
+    desc = d.get("description")
+    if isinstance(desc, dict):
+        desc = " ".join(str(v) for v in desc.values())
+    job.description = html_to_text(desc)
+    locs = d.get("workLocations") or []
+    if locs and not job.location:
+        job.location = " | ".join(str(l) for l in locs)
+
+
 # ---------- registry ----------
 
 FETCHERS = {
@@ -306,15 +358,21 @@ FETCHERS = {
     "amazon": fetch_amazon,
     "microsoft": fetch_microsoft,
     "google": fetch_google,
+    "rippling": fetch_rippling,
 }
 
 ENRICHERS = {
     "greenhouse": _enrich_greenhouse,
     "smartrecruiters": _enrich_smartrecruiters,
     "workday": _enrich_workday,
+    "rippling": _enrich_rippling,
 }
 
-DISCOVERABLE = ["greenhouse", "lever", "ashby", "smartrecruiters"]
+DISCOVERABLE = ["greenhouse", "lever", "ashby", "smartrecruiters", "rippling"]
+
+
+class DiscoveryError(Exception):
+    """Probing hit errors (rate limits, timeouts) and found nothing — retry later instead of caching 'not found'."""
 
 
 def enrich(job: Job) -> None:
@@ -341,7 +399,7 @@ def slug_candidates(name: str) -> list[str]:
 
 def discover(name: str, slugs: list[str] | None = None) -> dict | None:
     """Probe the public ATS boards for a company name. Returns {'ats','slug','count'} for the best hit."""
-    best = None
+    best, errors = None, []
     for ats in DISCOVERABLE:
         for slug in slugs or slug_candidates(name):
             try:
@@ -349,12 +407,17 @@ def discover(name: str, slugs: list[str] | None = None) -> dict | None:
             except http.NotFound:
                 continue
             except Exception as e:
-                log.debug("discover %s/%s: %s", ats, slug, e)
+                status = getattr(getattr(e, "response", None), "status_code", None)
+                if status in (400, 401, 403, 410, 422):   # board doesn't exist / not public
+                    continue
+                errors.append(f"{ats}/{slug}: {type(e).__name__} {status or ''}".strip())
                 continue
             if jobs and (best is None or len(jobs) > best["count"]):
                 best = {"ats": ats, "slug": slug, "count": len(jobs)}
             if jobs:
                 break  # first working slug for this ATS is enough
+    if best is None and errors:
+        raise DiscoveryError("; ".join(errors[:3]))
     return best
 
 

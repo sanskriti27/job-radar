@@ -6,6 +6,7 @@ from datetime import datetime, timedelta, timezone
 from pathlib import Path
 
 UTC = timezone.utc
+DISCOVERY_VERSION = 2
 
 
 class State:
@@ -15,6 +16,10 @@ class State:
         if path.exists():
             self.data.update(json.loads(path.read_text() or "{}"))
         self._orig = json.dumps(self.data, sort_keys=True)
+        if self.data.get("discovery_version") != DISCOVERY_VERSION:
+            # earlier discovery runs could record "not found" after being rate-limited: re-check those
+            self.data["discovery"] = {k: v for k, v in self.data["discovery"].items() if v.get("ats")}
+            self.data["discovery_version"] = DISCOVERY_VERSION
 
     # seen jobs -------------------------------------------------------
     def is_seen(self, uid: str) -> bool:

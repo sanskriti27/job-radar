@@ -30,7 +30,11 @@ title_exclude:
   - '\bintern(ship)?\b'
   - '\bapprentice\b'
   - '\btrainee\b'
-  - '\b(iii|iv|3|4)\b'                 # SDE III / Engineer 3 and above
+  # Levels mean different things per company: Google/Walmart/JPMorgan "Software Engineer III" is a
+  # 2–4-year role, so only Amazon-style "SDE III" and level IV+ are dropped; Gemini checks years asked.
+  - '\bsde\s*-?\s*(iii|3)\b'
+  - '\b(iv|v)\b'
+  - '\b(engineer|developer)\s*-?\s*[4-9]\b'
   - 'front[- ]?end'
   - '\bios\b'
   - '\bandroid\b'
