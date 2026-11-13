@@ -10,6 +10,16 @@
 "ats": null,
 "checked": "2026-11-13"
 },
+"Ather Energy": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Atlan": {
+"ats": "ashby",
+"checked": "2026-11-13",
+"count": 7,
+"slug": "atlan"
+},
 "Atlassian": {
 "ats": null,
 "checked": "2026-11-13"
@@ -23,6 +33,12 @@
 "checked": "2026-11-13",
 "count": 15,
 "slug": "cred"
+},
+"Cars24": {
+"ats": "smartrecruiters",
+"checked": "2026-11-13",
+"count": 1,
+"slug": "cars24"
 },
 "Chargebee": {
 "ats": null,
@@ -52,6 +68,12 @@
 "count": 268,
 "slug": "coinbase"
 },
+"Composio": {
+"ats": "ashby",
+"checked": "2026-11-13",
+"count": 31,
+"slug": "composio"
+},
 "Confluent": {
 "ats": null,
 "checked": "2026-11-13"
@@ -71,6 +93,10 @@
 "checked": "2026-11-13",
 "count": 386,
 "slug": "datadog"
+},
+"DeepSource": {
+"ats": null,
+"checked": "2026-11-13"
 },
 "Dream11": {
 "ats": null,
@@ -92,11 +118,21 @@
 "ats": null,
 "checked": "2026-11-13"
 },
+"Fi": {
+"ats": "lever",
+"checked": "2026-11-13",
+"count": 8,
+"slug": "fi"
+},
 "Freshworks": {
 "ats": "smartrecruiters",
 "checked": "2026-11-13",
 "count": 32,
 "slug": "freshworks"
+},
+"Fyle": {
+"ats": null,
+"checked": "2026-11-13"
 },
 "GitLab": {
 "ats": "greenhouse",
@@ -180,6 +216,10 @@
 "ats": null,
 "checked": "2026-11-13"
 },
+"Kapture CX": {
+"ats": null,
+"checked": "2026-11-13"
+},
 "Keka": {
 "ats": null,
 "checked": "2026-11-13"
@@ -188,7 +228,15 @@
 "ats": null,
 "checked": "2026-11-13"
 },
+"Leena AI": {
+"ats": null,
+"checked": "2026-11-13"
+},
 "Lenskart": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"M2P Fintech": {
 "ats": null,
 "checked": "2026-11-13"
 },
@@ -232,19 +280,25 @@
 "count": 360,
 "slug": "okta"
 },
+"OneCard": {
+"ats": null,
+"checked": "2026-11-13"
+},
 "Perfios": {
 "ats": null,
 "checked": "2026-11-13"
 },
-"PhonePe": {
+"Physics Wallah": {
 "ats": null,
 "checked": "2026-11-13"
+},
+"Pine Labs": {
+"ats": "greenhouse",
+"checked": "2026-11-13",
+"count": 1,
+"slug": "pine"
 },
 "Plivo": {
-"ats": null,
-"checked": "2026-11-13"
-},
-"Postman": {
 "ats": null,
 "checked": "2026-11-13"
 },
@@ -252,11 +306,7 @@
 "ats": null,
 "checked": "2026-11-13"
 },
-"Razorpay": {
-"ats": null,
-"checked": "2026-11-13"
-},
-"Rippling": {
+"Rocketlane": {
 "ats": null,
 "checked": "2026-11-13"
 },
@@ -272,6 +322,10 @@
 "count": 50,
 "slug": "sarvam"
 },
+"Scaler": {
+"ats": null,
+"checked": "2026-11-13"
+},
 "ServiceNow": {
 "ats": "smartrecruiters",
 "checked": "2026-11-13",
@@ -286,6 +340,12 @@
 "ats": null,
 "checked": "2026-11-13"
 },
+"SigNoz": {
+"ats": "ashby",
+"checked": "2026-11-13",
+"count": 13,
+"slug": "signoz"
+},
 "Slice": {
 "ats": "greenhouse",
 "checked": "2026-11-13",
@@ -298,7 +358,15 @@
 "count": 375,
 "slug": "snowflake"
 },
+"Spinny": {
+"ats": null,
+"checked": "2026-11-13"
+},
 "Sprinklr": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Sprinto": {
 "ats": null,
 "checked": "2026-11-13"
 },
@@ -321,6 +389,12 @@
 "slug": "tekion"
 },
 "ThoughtSpot": {
+"ats": "rippling",
+"checked": "2026-11-13",
+"count": 47,
+"slug": "thoughtspot"
+},
+"Toplyne": {
 "ats": null,
 "checked": "2026-11-13"
 },
@@ -338,6 +412,10 @@
 "ats": null,
 "checked": "2026-11-13"
 },
+"Ultrahuman": {
+"ats": null,
+"checked": "2026-11-13"
+},
 "Uniphore": {
 "ats": null,
 "checked": "2026-11-13"
@@ -347,6 +425,10 @@
 "checked": "2026-11-13"
 },
 "Visa": {
+"ats": null,
+"checked": "2026-11-13"
+},
+"Vymo": {
 "ats": null,
 "checked": "2026-11-13"
 },
@@ -382,6 +464,10 @@
 "count": 30,
 "slug": "zeta"
 },
+"Zluri": {
+"ats": null,
+"checked": "2026-11-13"
+},
 "Zscaler": {
 "ats": "greenhouse",
 "checked": "2026-11-13",
@@ -393,6 +479,7 @@
 "checked": "2026-11-13"
 }
 },
+"discovery_version": 2,
 "seeded": [
 "greenhouse:Rubrik",
 "greenhouse:Coinbase",
