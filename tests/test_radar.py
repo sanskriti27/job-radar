@@ -1,0 +1,182 @@
+import json
+from datetime import datetime, timedelta, timezone
+
+import pytest
+
+from radar import filters, http, main, notify, scorer, sources
+from radar.filters import TitleFilter, location_verdict
+from radar.models import Job
+
+import yaml
+from pathlib import Path
+
+FILT = yaml.safe_load((Path(__file__).parent.parent / "config" / "filters.yaml").read_text())
+TF = TitleFilter(FILT["title_include"], FILT["title_exclude"])
+NOW = datetime.now(timezone.utc)
+
+
+# ---------- titles ----------
+
+@pytest.mark.parametrize("title,ok", [
+    ("Software Engineer II", True),
+    ("SDE 2 - Payments", True),
+    ("Backend Engineer (Java)", True),
+    ("Full Stack Developer", True),
+    ("Senior Software Engineer", True),          # left to Gemini's experience check
+    ("Member of Technical Staff", True),
+    ("Founding Engineer", True),
+    ("Staff Software Engineer", False),
+    ("Principal Engineer, Backend", False),
+    ("Software Engineering Manager", False),
+    ("SDE III", False),
+    ("Software Engineer 3", False),
+    ("Frontend Engineer", False),
+    ("Software Engineer in Test", False),
+    ("Software Engineering Intern", False),
+    ("iOS Developer", False),
+    ("Tech Lead - Platform", False),
+    ("Solutions Engineer", False),
+    ("Account Executive", False),
+])
+def test_titles(title, ok):
+    assert TF.ok(title) is ok
+
+
+# ---------- locations ----------
+
+def J(loc, remote=None, codes=None, desc=""):
+    return Job(source="t", company="c", job_id="1", title="SWE", location=loc, remote=remote,
+               country_codes=codes or [], description=desc)
+
+
+@pytest.mark.parametrize("job,verdict", [
+    (J("Hyderabad, Telangana, India"), "yes"),
+    (J("Bengaluru"), "yes"),
+    (J("Hyderabad, TS, IND"), "yes"),
+    (J("Gurugram | London"), "yes"),
+    (J("Indianapolis, IN"), "no"),
+    (J("San Francisco, CA"), "no"),
+    (J("Remote"), "maybe"),
+    (J("Remote - APAC"), "yes"),
+    (J("Remote, Worldwide"), "yes"),
+    (J("Remote - US"), "maybe_foreign"),
+    (J("London", codes=["IN"]), "yes"),
+    (J("3 Locations"), "unknown"),
+])
+def test_locations(job, verdict):
+    assert location_verdict(job) == verdict
+
+
+# ---------- parsers ----------
+
+def test_greenhouse(monkeypatch):
+    monkeypatch.setattr(http, "get_json", lambda url, params=None, timeout=0: {"jobs": [
+        {"id": 123, "title": " Software Engineer II ", "location": {"name": "Bengaluru, India"},
+         "absolute_url": "https://x/123", "updated_at": "2026-11-12T05:00:00-04:00",
+         "first_published": "2026-11-12T04:00:00-04:00"}]})
+    [j] = sources.fetch_greenhouse("Acme", "acme")
+    assert j.title == "Software Engineer II" and j.uid == "greenhouse:acme:123"
+    assert j.posted_at == datetime(2026, 11, 12, 8, 0, tzinfo=timezone.utc)
+
+
+def test_lever(monkeypatch):
+    monkeypatch.setattr(http, "get_json", lambda url, params=None, timeout=0: [
+        {"id": "abc", "text": "Backend Engineer", "categories": {"location": "Remote", "allLocations": ["Remote", "Bangalore"]},
+         "hostedUrl": "https://jobs.lever.co/acme/abc", "createdAt": 1762920000000, "workplaceType": "remote",
+         "country": "in", "descriptionPlain": "Kafka", "lists": [{"text": "Req", "content": "<li>Java</li>"}]}])
+    [j] = sources.fetch_lever("Acme", "acme")
+    assert j.remote is True and "Bangalore" in j.location and j.country_codes == ["IN"] and "Java" in j.description
+
+
+def test_ashby(monkeypatch):
+    monkeypatch.setattr(http, "get_json", lambda url, params=None, timeout=0: {"jobs": [
+        {"id": "u1", "title": "SWE", "location": "Remote", "secondaryLocations": [{"location": "Hyderabad"}],
+         "isRemote": True, "jobUrl": "https://jobs.ashbyhq.com/acme/u1", "publishedAt": "2026-11-12T06:00:00.000+00:00",
+         "address": {"postalAddress": {"addressCountry": "India"}}, "isListed": True},
+        {"id": "u2", "title": "Hidden", "isListed": False}]})
+    jobs = sources.fetch_ashby("Acme", "acme")
+    assert len(jobs) == 1 and jobs[0].country_codes == ["India"] and "Hyderabad" in jobs[0].location
+
+
+def test_workday_posted():
+    assert sources.parse_workday_posted("Posted Today", NOW) == NOW
+    assert sources.parse_workday_posted("Posted 3 Days Ago", NOW) == NOW - timedelta(days=3)
+    assert sources.parse_workday_posted("Posted 30+ Days Ago", NOW) == NOW - timedelta(days=31)
+
+
+def test_amazon(monkeypatch):
+    monkeypatch.setattr(http, "get_json", lambda url, params=None, timeout=0: {"jobs": [
+        {"id_icims": "2812345", "title": "Software Development Engineer II", "normalized_location": "Hyderabad, TS, IND",
+         "posted_date": "November 11, 2026", "job_path": "/en/jobs/2812345/sde-ii", "country_code": "IND",
+         "basic_qualifications": "- 2+ years"}]})
+    [j] = sources.fetch_amazon()
+    assert j.url == "https://www.amazon.jobs/en/jobs/2812345/sde-ii" and location_verdict(j) == "yes"
+
+
+def test_html_to_text():
+    assert sources.html_to_text("&lt;p&gt;Hi &amp;amp; bye&lt;/p&gt;") == "Hi & bye"
+
+
+def test_slug_candidates():
+    assert sources.slug_candidates("Abnormal Security") == ["abnormalsecurity", "abnormal-security"]
+    assert "sarvam" in sources.slug_candidates("Sarvam AI")
+
+
+# ---------- end-to-end run ----------
+
+@pytest.fixture
+def env(tmp_path, monkeypatch):
+    board = {"jobs": []}
+    monkeypatch.setattr(main, "STATE_PATH", tmp_path / "seen.json")
+    monkeypatch.setattr(main, "load_config", lambda: (
+        {"pinned": [{"name": "Acme", "ats": "fake"}], "auto": []}, FILT, "profile"))
+    monkeypatch.setitem(sources.FETCHERS, "fake", lambda company, **_: list(board["jobs"]))
+    sent = []
+    monkeypatch.setattr(notify, "alert", lambda j, s: sent.append((j, s)))
+    monkeypatch.setattr(notify, "summary", lambda t, l: sent.append(("summary", t)))
+    monkeypatch.setattr(scorer, "score", lambda jobs, profile: {})
+    return board, sent
+
+
+def mk(i, title="Software Engineer II", loc="Hyderabad, India", age_h=0.2):
+    return Job(source="fake", company="Acme", job_id=str(i), title=title, location=loc,
+               url=f"https://x/{i}", posted_at=NOW - timedelta(hours=age_h), description="Java")
+
+
+def test_first_run_is_silent_then_alerts(env):
+    board, sent = env
+    board["jobs"] = [mk(1), mk(2)]
+    main.cmd_run()
+    assert sent == []                                  # seeded silently
+    board["jobs"] = [mk(1), mk(2), mk(3), mk(4, title="Staff Engineer"), mk(5, loc="Austin, TX"), mk(6, age_h=200)]
+    main.cmd_run()
+    assert [j.job_id for j, _ in sent] == ["3"]        # only the fresh, relevant, Indian one
+    main.cmd_run()
+    assert len(sent) == 1                              # never alerts twice
+
+
+def test_flood_guard(env):
+    board, sent = env
+    board["jobs"] = [mk(1)]
+    main.cmd_run()
+    board["jobs"] = [mk(i) for i in range(100, 140)]   # 40 "new" ids at once = board changed format
+    main.cmd_run()
+    assert sent == []
+
+
+def test_gemini_threshold(env, monkeypatch):
+    board, sent = env
+    board["jobs"] = [mk(1)]
+    main.cmd_run()
+    board["jobs"] = [mk(1), mk(2), mk(3), mk(4)]
+    monkeypatch.setattr(scorer, "score", lambda jobs, profile: {
+        "fake:acme:2": {"uid": "fake:acme:2", "score": 9, "location_ok": True},
+        "fake:acme:3": {"uid": "fake:acme:3", "score": 4, "location_ok": True},
+        "fake:acme:4": {"uid": "fake:acme:4", "score": 8, "location_ok": False}})
+    main.cmd_run()
+    assert [j.job_id for j, _ in sent] == ["2"]
+
+
+def test_format():
+    t, m = notify.format_job(mk(1), {"score": 9, "years": "2-4 yrs", "why": "Java + Kafka"})
+    assert t.startswith("🔥 Acme") and "9/10" in m and "min ago" in m

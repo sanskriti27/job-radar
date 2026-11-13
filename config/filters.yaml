@@ -1,0 +1,65 @@
+# What counts as a relevant opening. All patterns are case-insensitive regular expressions.
+
+title_include:
+  - '\bsoftware\b'
+  - '\bsde\b'
+  - '\bswe\b'
+  - 'back[- ]?end'
+  - 'full[- ]?stack'
+  - '\bjava\b'
+  - 'platform engineer'
+  - 'member of technical staff'
+  - '\bmts\b'
+  - 'founding engineer'
+  - '\bdeveloper\b'
+  - 'engineer\s*(i{1,2}|1|2)\b'       # Engineer I / II / 1 / 2
+  - 'product engineer'
+  - 'ai engineer'
+  - 'applied ai'
+
+title_exclude:
+  - '(?<!technical )\bstaff\b'         # keeps "Member of Technical Staff"
+  - '\bprincipal\b'
+  - '\blead\b'
+  - '\bmanager\b'
+  - '\bdirector\b'
+  - '\barchitect\b'
+  - '\bhead\b'
+  - '\bvp\b'
+  - '\bdistinguished\b'
+  - '\bintern(ship)?\b'
+  - '\bapprentice\b'
+  - '\btrainee\b'
+  - '\b(iii|iv|3|4)\b'                 # SDE III / Engineer 3 and above
+  - 'front[- ]?end'
+  - '\bios\b'
+  - '\bandroid\b'
+  - '\bmobile\b'
+  - '\bqa\b'
+  - '\bsdet\b'
+  - '\btest(ing)?\b'
+  - 'data analyst'
+  - 'data scientist'
+  - '\bsales\b'
+  - 'solutions? (engineer|architect|consultant)'
+  - 'support engineer'
+  - 'customer engineer'
+  - 'hardware'
+  - 'firmware'
+  - 'embedded'
+  - 'silicon'
+  - 'verification'
+  - 'physical design'
+  - '\basic\b'
+  - 'salesforce developer'             # CRM-admin style roles, not product engineering
+  - 'advocate'
+  - 'developer relations'
+
+# A posting older than this (when the API gives a date) is ignored even if we haven't seen it.
+max_age_hours: 72
+
+# Gemini score (1–10) needed for an alert. Jobs are still alerted (score "?") if Gemini is down.
+min_score: 6
+
+# Alerts per run before the rest are bundled into one summary notification.
+max_individual_alerts: 12

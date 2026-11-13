@@ -1,0 +1,132 @@
+# Companies to watch.
+#
+# Easiest: just add a name under `auto:`. On the next run the radar probes Greenhouse, Lever, Ashby
+# and SmartRecruiters for that name, remembers where it found the board, and starts watching it.
+# Names it can't find are re-tried weekly and listed by `validate`.
+#
+# If auto-discovery picks the wrong board or misses one, pin it under `pinned:`
+# (the slug is the bit after the domain on their careers page, e.g. job-boards.greenhouse.io/<slug>).
+#
+# A company's existing openings are recorded silently the first time it's read, so adding companies
+# never floods you — you only get alerted for roles posted after that.
+
+pinned:
+  # --- big tech with their own careers systems -------------------------------------------
+  - {name: Amazon,    ats: amazon,    search: "software development engineer"}
+  - {name: Microsoft, ats: microsoft, search: "software engineer"}     # experimental
+  - {name: Google,    ats: google,    search: "software engineer"}     # experimental
+
+  # --- Workday (host / tenant / site come from the careers URL) ---------------------------
+  - {name: Salesforce, ats: workday, host: salesforce.wd12.myworkdayjobs.com, tenant: salesforce, site: External_Career_Site, search: "software engineer india"}
+  - {name: NVIDIA,     ats: workday, host: nvidia.wd5.myworkdayjobs.com,      tenant: nvidia,     site: NVIDIAExternalCareerSite, search: "software engineer india"}
+  - {name: Adobe,      ats: workday, host: adobe.wd5.myworkdayjobs.com,       tenant: adobe,      site: external_experienced, search: "software engineer india"}
+  - {name: Walmart Global Tech, ats: workday, host: walmart.wd5.myworkdayjobs.com, tenant: walmart, site: WalmartExternal, search: "software engineer india"}
+  - {name: PayPal,     ats: workday, host: paypal.wd1.myworkdayjobs.com,      tenant: paypal,     site: jobs, search: "software engineer india"}
+  - {name: Mastercard, ats: workday, host: mastercard.wd1.myworkdayjobs.com,  tenant: mastercard, site: CorporateCareers, search: "software engineer india"}
+  - {name: Target,     ats: workday, host: target.wd5.myworkdayjobs.com,      tenant: target,     site: targetcareers, search: "software engineer india"}
+
+auto:
+  # Global product companies with big India engineering teams
+  - Atlassian
+  - Uber
+  - Rippling
+  - Databricks
+  - Stripe
+  - Coinbase
+  - Rubrik
+  - Cohesity
+  - Nutanix
+  - MongoDB
+  - Confluent
+  - Elastic
+  - Okta
+  - Twilio
+  - Datadog
+  - Cloudflare
+  - GitLab
+  - Snowflake
+  - Zscaler
+  - Harness
+  - Gong
+  - Abnormal Security
+  - ThoughtSpot
+  - Druva
+  - Visa
+  - ServiceNow
+  - Freshworks
+  - Sprinklr
+  - Arcesium
+  - Tekion
+  - Intuit
+  - Wise
+  - Grab
+  # Indian product companies / startups
+  - Postman
+  - BrowserStack
+  - Razorpay
+  - PhonePe
+  - Groww
+  - CRED
+  - Meesho
+  - Swiggy
+  - Zepto
+  - Dream11
+  - Chargebee
+  - Zeta
+  - Juspay
+  - Slice
+  - Jupiter
+  - Navi
+  - InMobi
+  - Glance
+  - ShareChat
+  - Urban Company
+  - Lenskart
+  - Udaan
+  - Darwinbox
+  - Keka
+  - HighRadius
+  - Zenoti
+  - Hevo Data
+  - Innovaccer
+  - Icertis
+  - MindTickle
+  - Whatfix
+  - LeadSquared
+  - Hasura
+  - Sarvam AI
+  - Observe.AI
+  - Uniphore
+  - Yellow.ai
+  - Exotel
+  - Plivo
+  - Gupshup
+  - Setu
+  - Perfios
+  - smallcase
+  - INDmoney
+  - CoinDCX
+  - CoinSwitch
+  - Rapido
+  - Atlan
+  - Composio
+  - Scaler
+  - Physics Wallah
+  - Ultrahuman
+  - Spinny
+  - Cars24
+  - Ather Energy
+  - DeepSource
+  - SigNoz
+  - Fyle
+  - Rocketlane
+  - Sprinto
+  - Zluri
+  - Vymo
+  - Leena AI
+  - Toplyne
+  - Kapture CX
+  - Pine Labs
+  - M2P Fintech
+  - OneCard
+  - Fi
