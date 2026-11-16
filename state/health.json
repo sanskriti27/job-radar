@@ -82,7 +82,7 @@
 "greenhouse:Elastic": {
 "error": null,
 "last_ok": "2026-11-16T16:00Z",
-"roles": 375
+"roles": 400
 },
 "greenhouse:GitLab": {
 "error": null,
