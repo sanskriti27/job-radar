@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import logging
 import os
+import re
 import sys
 import time
 from concurrent.futures import ThreadPoolExecutor, as_completed
@@ -22,6 +23,7 @@ FLOOD_LIMIT = 25          # more new jobs than this from one board in one run = 
 DISCOVERIES_PER_RUN = 40  # keep each run short; the rest are discovered on later runs
 
 log = logging.getLogger("radar")
+SENIOR_RE = re.compile(r"\b(senior|sr)\b", re.I)
 
 
 # ---------- config ----------
@@ -181,6 +183,8 @@ def cmd_run() -> int:
     picks = []
     for j in cands:
         s = scores.get(j.uid)
+        if s is None and SENIOR_RE.search(j.title):
+            continue   # Gemini unavailable: can't check the years asked, so don't ping for senior titles
         if s is None or (s.get("location_ok", True) and int(s.get("score", 0)) >= min_score):
             picks.append((j, s))
     picks.sort(key=lambda p: -(int(p[1]["score"]) if p[1] and p[1].get("score") is not None else 5))

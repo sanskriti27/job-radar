@@ -295,3 +295,22 @@ def test_throttle_skips_recently_polled_workday(tmp_path, monkeypatch):
     srcs = [{"name": "Adobe", "ats": "workday"}, {"name": "Stripe", "ats": "greenhouse", "slug": "stripe"}]
     assert len(main.due_sources(srcs)) == 2
     assert [s["name"] for s in main.due_sources(srcs)] == ["Stripe"]
+
+
+def test_gemini_overloaded_tries_next_model_and_senior_not_alerted_unscored(env, monkeypatch):
+    import requests
+    monkeypatch.setattr(scorer, "_working_model", None)
+    monkeypatch.setenv("GEMINI_MODEL", "")
+    def post(url, payload, headers=None, timeout=0):
+        if "gemini-flash-latest" in url:
+            r = requests.Response(); r.status_code = 503
+            raise requests.HTTPError(response=r)
+        return {"candidates": [{"content": {"parts": [{"text": "[]"}]}}]}
+    monkeypatch.setattr(http, "post_json", post)
+    assert scorer._generate({}, "k") == "[]" and scorer._working_model == "gemini-flash-lite-latest"
+    board, sent = env
+    board["jobs"] = [mk(1)]
+    main.cmd_run()
+    board["jobs"] = [mk(1), mk(2, title="Senior Software Engineer"), mk(3)]
+    main.cmd_run()                      # env stubs scoring to return nothing = Gemini down
+    assert [j.job_id for j, _ in sent] == ["3"]

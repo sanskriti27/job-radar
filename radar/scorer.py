@@ -57,7 +57,7 @@ def score(jobs: list[Job], profile: str) -> dict[str, dict]:
 
 
 # An empty GEMINI_MODEL (unset repo variable) must fall back to the defaults, not produce "models/:generateContent".
-FALLBACK_MODELS = ["gemini-flash-latest", "gemini-2.5-flash", "gemini-2.0-flash"]
+FALLBACK_MODELS = ["gemini-flash-latest", "gemini-flash-lite-latest", "gemini-2.5-flash", "gemini-2.5-flash-lite", "gemini-2.0-flash"]
 _working_model: str | None = None
 
 
@@ -80,8 +80,8 @@ def _generate(body: dict, key: str) -> str:
             last = e
         except Exception as e:
             last = e
-            if getattr(getattr(e, "response", None), "status_code", None) not in (400, 404):
-                break                        # bad key / quota: another model won't help
+            if getattr(getattr(e, "response", None), "status_code", None) in (401, 403):
+                break                        # bad key: another model won't help (overloaded/unknown model: try next)
     raise last or RuntimeError("no Gemini model configured")
 
 

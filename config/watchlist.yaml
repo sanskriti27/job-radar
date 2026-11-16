@@ -26,8 +26,6 @@ pinned:
 
   # --- boards whose name doesn't match the company name ------------------------------------
   - {name: Razorpay, ats: greenhouse, slug: razorpaysoftwareprivatelimited}
-  - {name: PhonePe,  ats: greenhouse, slug: phonepe}
-  - {name: Postman,  ats: greenhouse, slug: postman}
   - {name: Rippling, ats: rippling,   slug: rippling}
 
 auto:
