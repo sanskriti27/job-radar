@@ -73,8 +73,12 @@ def fetch_all(srcs: list[dict]) -> tuple[dict[str, list[Job]], dict[str, str]]:
         params = {k: v for k, v in src.items() if k not in ("ats", "name")}
         return sources.FETCHERS[src["ats"]](company=src["name"], **params)
 
-    with ThreadPoolExecutor(16) as ex:
-        futs = {ex.submit(one, s): s for s in srcs}
+    # Workday rate-limits hard (429s), so those are read one at a time; everything else in parallel.
+    slow = [s for s in srcs if s["ats"] == "workday"]
+    fast = [s for s in srcs if s["ats"] != "workday"]
+    with ThreadPoolExecutor(16) as ex, ThreadPoolExecutor(1) as ex_slow:
+        futs = {ex.submit(one, s): s for s in fast}
+        futs.update({ex_slow.submit(one, s): s for s in slow})
         for f in as_completed(futs):
             s = futs[f]
             key = f"{s['ats']}:{s['name']}"
@@ -83,6 +87,35 @@ def fetch_all(srcs: list[dict]) -> tuple[dict[str, list[Job]], dict[str, str]]:
             except Exception as e:
                 errors[key] = f"{type(e).__name__}: {e}"[:200]
     return results, errors
+
+
+# Sources that block when polled too often are read at most this often (minutes) when the radar loops.
+MIN_INTERVAL_MIN = {"workday": 12, "google": 8, "microsoft": 8}
+THROTTLE_PATH = ROOT / "state" / "throttle.json"   # not committed; lives for the length of one loop job
+
+
+def due_sources(srcs: list[dict]) -> list[dict]:
+    import json
+    now = time.time()
+    try:
+        last = json.loads(THROTTLE_PATH.read_text())
+    except (OSError, ValueError):
+        last = {}
+    due = []
+    for s in srcs:
+        key = f"{s['ats']}:{s['name']}"
+        gap = MIN_INTERVAL_MIN.get(s["ats"], 0) * 60
+        if gap and now - last.get(key, 0) < gap:
+            continue
+        if gap:
+            last[key] = now
+        due.append(s)
+    try:
+        THROTTLE_PATH.parent.mkdir(parents=True, exist_ok=True)
+        THROTTLE_PATH.write_text(json.dumps(last))
+    except OSError:
+        pass
+    return due
 
 
 # ---------- filtering ----------
@@ -123,7 +156,8 @@ def cmd_run() -> int:
     watch, filt, profile = load_config()
     state = State(STATE_PATH)
     srcs, unresolved = resolve_sources(watch, state)
-    results, errors = fetch_all(srcs)
+    polled = due_sources(srcs)
+    results, errors = fetch_all(polled)
 
     fresh: list[Job] = []
     seeded_now = []
@@ -161,7 +195,7 @@ def cmd_run() -> int:
     changed = state.save()
 
     report = [
-        f"### Job Radar run — {len(srcs)} boards, {sum(len(v) for v in results.values())} open roles read, {time.time() - t0:.1f}s",
+        f"### Job Radar run — {len(polled)}/{len(srcs)} boards, {sum(len(v) for v in results.values())} open roles read, {time.time() - t0:.1f}s",
         f"- new since last run: **{len(fresh)}** · passed filters: **{len(cands)}** · alerted: **{len(picks)}**",
     ]
     if seeded_now:
@@ -185,7 +219,9 @@ def cmd_validate() -> int:
     srcs, unresolved = resolve_sources(watch, state, force_discover=True)
     results, errors = fetch_all(srcs)
     title_ok = TitleFilter(filt.get("title_include", []), filt.get("title_exclude", []))
-    rows = ["| Company | Board | Open roles | Relevant now (title + India) |", "|---|---|---|---|"]
+    rows = [f"**Gemini scoring:** {scorer.selftest()}",
+            f"**Phone alerts:** {'✅ configured' if notify.configured() else '❌ NTFY_TOPIC secret is not set'}", "",
+            "| Company | Board | Open roles | Relevant now (title + India) |", "|---|---|---|---|"]
     for s in sorted(srcs, key=lambda x: x["name"].lower()):
         key = f"{s['ats']}:{s['name']}"
         board = s["ats"] + (f"/{s.get('slug')}" if s.get("slug") else "")
@@ -198,11 +234,10 @@ def cmd_validate() -> int:
     not_found = [n for n in unresolved if state.discovery(n)]
     retry = [n for n in unresolved if not state.discovery(n)]
     if not_found:
-        rows.append("\n**Not on Greenhouse/Lever/Ashby/SmartRecruiters/Rippling** (pin them in watchlist.yaml if you know the board): "
+        rows.append("\n**Not on Greenhouse/Lever/Ashby/SmartRecruiters/Rippling/Workable/Recruitee** (pin them in watchlist.yaml if you know the board): "
                     + ", ".join(not_found))
     if retry:
         rows.append("\n**Couldn't check yet (rate-limited/timeouts) — will retry automatically:** " + ", ".join(retry))
-    state.save()
     _emit("\n".join(rows))
     return 1 if errors and len(errors) == len(srcs) else 0
 

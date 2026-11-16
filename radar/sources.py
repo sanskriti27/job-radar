@@ -69,7 +69,13 @@ def parse_workday_posted(s: str | None, now: datetime | None = None) -> datetime
 # ---------- Greenhouse ----------
 
 def fetch_greenhouse(company: str, slug: str, **_) -> list[Job]:
-    data = http.get_json(f"https://boards-api.greenhouse.io/v1/boards/{slug}/jobs")
+    try:
+        data = http.get_json(f"https://boards-api.greenhouse.io/v1/boards/{slug}/jobs")
+    except http.NotFound:
+        jobs = _greenhouse_html(company, slug)   # some boards are public as pages but not through the API
+        if not jobs:
+            raise
+        return jobs
     jobs = []
     for j in data.get("jobs", []):
         jobs.append(Job(
@@ -83,7 +89,43 @@ def fetch_greenhouse(company: str, slug: str, **_) -> list[Job]:
     return jobs
 
 
+_GH_ANCHOR = re.compile(r'<a[^>]+href="([^"]*?/jobs/(\d+)[^"]*)"[^>]*>(.*?)</a>', re.S)
+
+
+def parse_greenhouse_html(company: str, slug: str, page_html: str) -> list[Job]:
+    jobs, seen = [], set()
+    for href, jid, inner in _GH_ANCHOR.findall(page_html):
+        if jid in seen:
+            continue
+        seen.add(jid)
+        parts = [html.unescape(t).strip() for t in re.split(r"<[^>]+>", inner)]
+        parts = [t for t in parts if t and t.lower() != "new"]
+        if not parts:
+            continue
+        url = href if href.startswith("http") else "https://job-boards.greenhouse.io" + href
+        jobs.append(Job(source="greenhouse", company=company, job_id=jid, title=parts[0],
+                        location=parts[-1] if len(parts) > 1 else "", url=url,
+                        extra={"slug": slug, "html": True}))
+    return jobs
+
+
+def _greenhouse_html(company: str, slug: str) -> list[Job]:
+    jobs, ids = [], set()
+    for page in range(1, 11):
+        r = http.get(f"https://job-boards.greenhouse.io/{slug}", params={"page": page})
+        new = [j for j in parse_greenhouse_html(company, slug, r.text) if j.job_id not in ids]
+        if not new:
+            break
+        ids.update(j.job_id for j in new)
+        jobs.extend(new)
+    return jobs
+
+
 def _enrich_greenhouse(job: Job) -> None:
+    if job.extra.get("html"):
+        r = http.get(job.url)
+        job.description = html_to_text(re.sub(r"<(script|style)[^>]*>.*?</\1>", " ", r.text, flags=re.S))[:6000]
+        return
     d = http.get_json(f"https://boards-api.greenhouse.io/v1/boards/{job.extra['slug']}/jobs/{job.job_id}")
     job.description = html_to_text(d.get("content"))
     offices = [o.get("name", "") for o in d.get("offices", []) if o.get("name")]
@@ -182,7 +224,7 @@ def _enrich_smartrecruiters(job: Job) -> None:
 # ---------- Workday ----------
 
 def fetch_workday(company: str, host: str, tenant: str, site: str, search: str = "software engineer",
-                  pages: int = 5, **_) -> list[Job]:
+                  pages: int = 2, **_) -> list[Job]:
     base = f"https://{host}/wday/cxs/{tenant}/{site}"
     jobs = []
     for page in range(pages):
@@ -191,7 +233,9 @@ def fetch_workday(company: str, host: str, tenant: str, site: str, search: str =
         for text in dict.fromkeys([search, re.sub(r"\s*india\s*", " ", search, flags=re.I).strip(), ""]):
             try:
                 data = http.post_json(f"{base}/jobs", {"appliedFacets": {}, "limit": 20, "offset": page * 20,
-                                                       "searchText": text})
+                                                       "searchText": text},
+                                      headers={"Accept": "application/json", "Origin": f"https://{host}",
+                                               "Referer": f"https://{host}/en-US/{site}"})
                 search = text
                 break
             except Exception as e:
@@ -347,6 +391,48 @@ def _enrich_rippling(job: Job) -> None:
         job.location = " | ".join(str(l) for l in locs)
 
 
+# ---------- Workable ----------
+
+def fetch_workable(company: str, slug: str, **_) -> list[Job]:
+    data = http.get_json(f"https://apply.workable.com/api/v1/widget/accounts/{slug}", params={"details": "true"})
+    jobs = []
+    for j in data.get("jobs", []):
+        code = j.get("shortcode") or j.get("id")
+        if not code:
+            continue
+        loc = ", ".join(x for x in (j.get("city"), j.get("state"), j.get("country")) if x)
+        jobs.append(Job(
+            source="workable", company=company, job_id=str(code),
+            title=(j.get("title") or "").strip(), location=loc,
+            url=j.get("url") or j.get("shortlink") or f"https://apply.workable.com/{slug}/j/{code}/",
+            remote=bool(j.get("telecommuting")) or None,
+            posted_at=parse_iso(j.get("published_on") or j.get("created_at")),
+            description=html_to_text(j.get("description")),
+            country_codes=[j["country"]] if j.get("country") else [],
+        ))
+    return jobs
+
+
+# ---------- Recruitee ----------
+
+def fetch_recruitee(company: str, slug: str, **_) -> list[Job]:
+    data = http.get_json(f"https://{slug}.recruitee.com/api/offers/")
+    jobs = []
+    for j in data.get("offers", []):
+        posted = (j.get("published_at") or j.get("created_at") or "").replace(" UTC", "+00:00").replace(" ", "T", 1)
+        jobs.append(Job(
+            source="recruitee", company=company, job_id=str(j.get("id")),
+            title=(j.get("title") or "").strip(),
+            location=j.get("location") or ", ".join(x for x in (j.get("city"), j.get("country")) if x),
+            url=j.get("careers_url") or "",
+            remote=bool(j.get("remote")) or None,
+            posted_at=parse_iso(posted),
+            description=html_to_text((j.get("description") or "") + " " + (j.get("requirements") or "")),
+            country_codes=[j["country_code"].upper()] if j.get("country_code") else [],
+        ))
+    return jobs
+
+
 # ---------- registry ----------
 
 FETCHERS = {
@@ -359,6 +445,8 @@ FETCHERS = {
     "microsoft": fetch_microsoft,
     "google": fetch_google,
     "rippling": fetch_rippling,
+    "workable": fetch_workable,
+    "recruitee": fetch_recruitee,
 }
 
 ENRICHERS = {
@@ -368,7 +456,7 @@ ENRICHERS = {
     "rippling": _enrich_rippling,
 }
 
-DISCOVERABLE = ["greenhouse", "lever", "ashby", "smartrecruiters", "rippling"]
+DISCOVERABLE = ["greenhouse", "lever", "ashby", "smartrecruiters", "rippling", "workable", "recruitee"]
 
 
 class DiscoveryError(Exception):
@@ -408,6 +496,8 @@ def discover(name: str, slugs: list[str] | None = None) -> dict | None:
                 continue
             except Exception as e:
                 status = getattr(getattr(e, "response", None), "status_code", None)
+                if ats == "recruitee" and status is None:  # unknown subdomain
+                    continue
                 if status in (400, 401, 403, 410, 422):   # board doesn't exist / not public
                     continue
                 errors.append(f"{ats}/{slug}: {type(e).__name__} {status or ''}".strip())

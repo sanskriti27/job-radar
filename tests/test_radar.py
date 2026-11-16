@@ -131,6 +131,7 @@ def test_slug_candidates():
 def env(tmp_path, monkeypatch):
     board = {"jobs": []}
     monkeypatch.setattr(main, "STATE_PATH", tmp_path / "seen.json")
+    monkeypatch.setattr(main, "THROTTLE_PATH", tmp_path / "throttle.json")
     monkeypatch.setattr(main, "load_config", lambda: (
         {"pinned": [{"name": "Acme", "ats": "fake"}], "auto": []}, FILT, "profile"))
     monkeypatch.setitem(sources.FETCHERS, "fake", lambda company, **_: list(board["jobs"]))
@@ -238,3 +239,59 @@ def test_workday_422_falls_back(monkeypatch):
     jobs = sources.fetch_workday("Walmart", host="walmart.wd5.myworkdayjobs.com", tenant="walmart",
                                  site="WalmartExternal", search="software engineer india", pages=1)
     assert calls == ["software engineer india", "software engineer"] and jobs[0].job_id == "R1"
+
+
+# ---------- fixes from the 16 Nov review ----------
+
+def test_empty_gemini_model_variable_uses_default(monkeypatch):
+    monkeypatch.setenv("GEMINI_MODEL", "")
+    monkeypatch.setattr(scorer, "_working_model", None)
+    assert scorer._models()[0] == "" and [m for m in scorer._models() if m][0] == "gemini-flash-latest"
+    urls = []
+    def post(url, payload, headers=None, timeout=0):
+        urls.append(url)
+        return {"candidates": [{"content": {"parts": [{"text": '[{"uid":"fake:acme:1","score":8}]'}]}}]}
+    monkeypatch.setattr(http, "post_json", post)
+    monkeypatch.setenv("GEMINI_API_KEY", "k")
+    out = scorer.score([mk(1)], "p")
+    assert "/models/gemini-flash-latest:generateContent" in urls[0] and out["fake:acme:1"]["score"] == 8
+
+
+def test_gemini_falls_back_when_model_retired(monkeypatch):
+    monkeypatch.setenv("GEMINI_MODEL", "gone-model")
+    monkeypatch.setattr(scorer, "_working_model", None)
+    def post(url, payload, headers=None, timeout=0):
+        if "gone-model" in url:
+            raise http.NotFound(url)
+        return {"candidates": [{"content": {"parts": [{"text": "[]"}]}}]}
+    monkeypatch.setattr(http, "post_json", post)
+    assert scorer._generate({}, "k") == "[]" and scorer._working_model == "gemini-flash-latest"
+
+
+def test_greenhouse_html_fallback():
+    page = '''<a href="https://job-boards.greenhouse.io/phonepe/jobs/7690461003"><p class="t">Software Engineer</p>
+              <span>New</span><p class="l">Bengaluru</p></a>
+              <a href="/phonepe/jobs/7690461004"><p>SDE 2 &amp; Backend</p><p>Pune</p></a>'''
+    a, b = sources.parse_greenhouse_html("PhonePe", "phonepe", page)
+    assert (a.title, a.location, a.job_id) == ("Software Engineer", "Bengaluru", "7690461003")
+    assert b.title == "SDE 2 & Backend" and b.url == "https://job-boards.greenhouse.io/phonepe/jobs/7690461004"
+
+
+def test_workable_and_recruitee(monkeypatch):
+    monkeypatch.setattr(http, "get_json", lambda url, params=None, timeout=0: {"jobs": [
+        {"shortcode": "AB12", "title": "Backend Engineer", "city": "Bengaluru", "country": "India",
+         "url": "https://apply.workable.com/j/AB12", "published_on": "2026-11-16", "telecommuting": False}]})
+    [j] = sources.fetch_workable("Acme", "acme")
+    assert location_verdict(j) == "yes" and j.posted_at is not None
+    monkeypatch.setattr(http, "get_json", lambda url, params=None, timeout=0: {"offers": [
+        {"id": 9, "title": "SDE II", "location": "Hyderabad, India", "country_code": "in",
+         "careers_url": "https://acme.recruitee.com/o/sde", "published_at": "2026-11-16 06:00:00 UTC"}]})
+    [j] = sources.fetch_recruitee("Acme", "acme")
+    assert j.country_codes == ["IN"] and j.posted_at.hour == 6
+
+
+def test_throttle_skips_recently_polled_workday(tmp_path, monkeypatch):
+    monkeypatch.setattr(main, "THROTTLE_PATH", tmp_path / "t.json")
+    srcs = [{"name": "Adobe", "ats": "workday"}, {"name": "Stripe", "ats": "greenhouse", "slug": "stripe"}]
+    assert len(main.due_sources(srcs)) == 2
+    assert [s["name"] for s in main.due_sources(srcs)] == ["Stripe"]

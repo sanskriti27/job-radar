@@ -1,55 +1,94 @@
 name: Job Radar
 
+# GitHub only fires "every 5 minutes" schedules every few HOURS on small repos, so instead of relying
+# on the schedule, one job stays alive for ~5.5 hours and polls every ~3 minutes, then starts the next
+# job itself. The schedule below is only a watchdog that restarts the chain if it ever stops.
+
 on:
   schedule:
-    - cron: "*/5 * * * *"        # every 5 min (GitHub may delay scheduled runs by a few minutes)
+    - cron: "7,37 * * * *"
   workflow_dispatch:
     inputs:
       command:
-        description: "run | validate | test-notify"
-        default: run
+        description: "loop | validate | test-notify | discover <names>"
+        default: loop
         required: false
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
-  group: job-radar
+  # one polling loop at a time; validate / test-notify run alongside it instead of waiting hours
+  group: job-radar-${{ (github.event_name == 'workflow_dispatch' && (github.event.inputs.command == '' || github.event.inputs.command == 'loop')) && 'loop' || github.run_id }}
   cancel-in-progress: false
+
+env:
+  GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+  GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
+  NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+  NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
+  TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+  TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+  CANDIDATE_PROFILE: ${{ secrets.CANDIDATE_PROFILE }}
+  COMMAND: ${{ github.event_name == 'schedule' && 'watchdog' || github.event.inputs.command || 'loop' }}
+  GH_TOKEN: ${{ github.token }}
 
 jobs:
   radar:
     runs-on: ubuntu-latest
-    timeout-minutes: 8
+    timeout-minutes: 350
     steps:
+      - name: Watchdog (restart the loop only if none is running)
+        if: env.COMMAND == 'watchdog'
+        run: |
+          active=$(gh run list -R "$GITHUB_REPOSITORY" --workflow radar.yml --event workflow_dispatch --limit 20 \
+                   --json status -q '[.[] | select(.status != "completed")] | length')
+          echo "active loops: $active"
+          if [ "$active" = "0" ]; then gh workflow run radar.yml -R "$GITHUB_REPOSITORY" --ref "$GITHUB_REF_NAME" -f command=loop; fi
+
       - uses: actions/checkout@v4
+        if: env.COMMAND != 'watchdog'
 
       - uses: actions/setup-python@v5
+        if: env.COMMAND != 'watchdog'
         with:
           python-version: "3.12"
           cache: pip
 
       - run: pip install -r requirements.txt
+        if: env.COMMAND != 'watchdog'
 
-      - name: Run radar
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-          GEMINI_MODEL: ${{ vars.GEMINI_MODEL }}
-          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
-          NTFY_TOKEN: ${{ secrets.NTFY_TOKEN }}
-          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
-          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
-          CANDIDATE_PROFILE: ${{ secrets.CANDIDATE_PROFILE }}
-        run: python -m radar ${{ github.event.inputs.command || 'run' }}
+      - name: One-off command
+        if: env.COMMAND != 'loop' && env.COMMAND != 'watchdog'
+        run: python -m radar $COMMAND
 
-      - name: Save state
-        if: always()
+      - name: Poll every ~3 minutes
+        if: env.COMMAND == 'loop'
         run: |
           git config user.name  "job-radar-bot"
           git config user.email "job-radar-bot@users.noreply.github.com"
-          git add state/
-          if ! git diff --cached --quiet; then
-            git commit -m "radar state [skip ci]"
-            git pull --rebase -X ours origin "${GITHUB_REF_NAME}" || true
-            git push
-          fi
+          end=$((SECONDS + 330*60))
+          n=0
+          while [ $SECONDS -lt $end ]; do
+            n=$((n+1))
+            start=$SECONDS
+            # pick up watchlist/filter/code edits pushed while the loop is running
+            git pull -q --rebase --autostash origin "$GITHUB_REF_NAME" || git rebase --abort || true
+            echo "::group::cycle $n $(date -u +%H:%M:%S)"
+            GITHUB_STEP_SUMMARY=/dev/null python -m radar run > last_run.md || echo "run failed"
+            cat last_run.md
+            echo "::endgroup::"
+            git add state/
+            if ! git diff --cached --quiet; then
+              git commit -q -m "radar state [skip ci]"
+              git push -q || { git pull -q --rebase -X theirs origin "$GITHUB_REF_NAME" && git push -q; } || true
+            fi
+            took=$((SECONDS - start))
+            [ $took -lt 170 ] && sleep $((170 - took))
+          done
+          { echo "Polled $n times in this job. Last cycle:"; echo; cat last_run.md; } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: Start the next loop
+        if: always() && env.COMMAND == 'loop'
+        run: gh workflow run radar.yml --ref "$GITHUB_REF_NAME" -f command=loop

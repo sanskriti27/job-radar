@@ -34,7 +34,6 @@ def score(jobs: list[Job], profile: str) -> dict[str, dict]:
     key = os.environ.get("GEMINI_API_KEY")
     if not key or not jobs:
         return {}
-    model = os.environ.get("GEMINI_MODEL", "gemini-flash-latest")
     out: dict[str, dict] = {}
     for i in range(0, len(jobs), 15):
         batch = jobs[i:i + 15]
@@ -48,13 +47,55 @@ def score(jobs: list[Job], profile: str) -> dict[str, dict]:
             "generationConfig": {"temperature": 0.1, "responseMimeType": "application/json"},
         }
         try:
-            resp = http.post_json(
-                f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
-                body, headers={"x-goog-api-key": key}, timeout=60)
-            text = resp["candidates"][0]["content"]["parts"][0]["text"]
+            text = _generate(body, key)
             for item in json.loads(text):
                 if isinstance(item, dict) and item.get("uid"):
                     out[item["uid"]] = item
         except Exception as e:
-            log.warning("Gemini scoring failed (%s); these jobs will alert unscored", e)
+            log.warning("Gemini scoring failed (%s); these jobs will alert unscored", _describe(e))
     return out
+
+
+# An empty GEMINI_MODEL (unset repo variable) must fall back to the defaults, not produce "models/:generateContent".
+FALLBACK_MODELS = ["gemini-flash-latest", "gemini-2.5-flash", "gemini-2.0-flash"]
+_working_model: str | None = None
+
+
+def _models() -> list[str]:
+    first = [_working_model] if _working_model else []
+    return list(dict.fromkeys(first + [os.environ.get("GEMINI_MODEL") or ""] + FALLBACK_MODELS))
+
+
+def _generate(body: dict, key: str) -> str:
+    global _working_model
+    last: Exception | None = None
+    for model in [m for m in _models() if m]:
+        try:
+            resp = http.post_json(
+                f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent",
+                body, headers={"x-goog-api-key": key}, timeout=60)
+            _working_model = model
+            return resp["candidates"][0]["content"]["parts"][0]["text"]
+        except http.NotFound as e:          # model name retired: try the next one
+            last = e
+        except Exception as e:
+            last = e
+            if getattr(getattr(e, "response", None), "status_code", None) not in (400, 404):
+                break                        # bad key / quota: another model won't help
+    raise last or RuntimeError("no Gemini model configured")
+
+
+def _describe(e: Exception) -> str:
+    r = getattr(e, "response", None)
+    return f"{type(e).__name__} {r.status_code}: {r.text[:300]}" if r is not None else f"{type(e).__name__}: {e}"
+
+
+def selftest() -> str:
+    key = os.environ.get("GEMINI_API_KEY")
+    if not key:
+        return "❌ GEMINI_API_KEY secret is not set"
+    try:
+        _generate({"contents": [{"role": "user", "parts": [{"text": "Reply with the word ok"}]}]}, key)
+        return f"✅ working (model `{_working_model}`)"
+    except Exception as e:
+        return "❌ " + _describe(e)
