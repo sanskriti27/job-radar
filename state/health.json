@@ -39,6 +39,16 @@
 "last_ok": "2026-11-16T16:00Z",
 "roles": 75
 },
+"atlassian:Atlassian": {
+"error": null,
+"last_ok": "2026-11-16T16:00Z",
+"roles": 250
+},
+"google:Google": {
+"error": null,
+"last_ok": "2026-11-16T16:00Z",
+"roles": 0
+},
 "greenhouse:Abnormal Security": {
 "error": null,
 "last_ok": "2026-11-16T16:00Z",
@@ -183,6 +193,16 @@
 "error": null,
 "last_ok": "2026-11-16T16:00Z",
 "roles": 25
+},
+"microsoft:Microsoft": {
+"error": null,
+"last_ok": "2026-11-16T16:00Z",
+"roles": 0
+},
+"oracle:Uber": {
+"error": null,
+"last_ok": "2026-11-16T16:00Z",
+"roles": 200
 },
 "rippling:Rippling": {
 "error": null,
