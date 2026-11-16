@@ -22,6 +22,7 @@ pinned:
   - {name: Adobe,      ats: workday, host: adobe.wd5.myworkdayjobs.com,       tenant: adobe,      site: external_experienced, search: "software engineer india"}
   - {name: PayPal,     ats: workday, host: paypal.wd1.myworkdayjobs.com,      tenant: paypal,     site: jobs, search: "software engineer india"}
   - {name: Mastercard, ats: workday, host: mastercard.wd1.myworkdayjobs.com,  tenant: mastercard, site: CorporateCareers, search: "software engineer india"}
+  - {name: Postman,    ats: workday, host: postman.wd108.myworkdayjobs.com,   tenant: postman,    site: careers, search: "engineer"}
   - {name: Target,     ats: workday, host: target.wd5.myworkdayjobs.com,      tenant: target,     site: targetcareers, search: "software engineer india"}
 
   # --- companies with their own careers systems ----------------------------------------------
