@@ -266,6 +266,27 @@ def cmd_discover(names: list[str]) -> int:
     return 0
 
 
+def cmd_probe(urls: list[str]) -> int:
+    """Debug helper: fetch URLs from the runner and show what comes back (status, start of body, ATS hints)."""
+    from . import http
+    hint = re.compile(r"""https?:[^"'\s<>]*(?:greenhouse|lever\.co|ashby|workday|darwinbox|keka|oraclecloud|"""
+                      r"""smartrecruiters|freshteam|zohorecruit|/api/|endpoint|graphql)[^"'\s<>]*""", re.I)
+    src = re.compile(r"""<script[^>]+src=["']([^"']+)""", re.I)
+    for u in urls:
+        try:
+            r = http._session.get(u, timeout=25)
+            body = r.text
+            print(f"\n=== {u}\n{r.status_code} {r.headers.get('content-type')} len={len(body)} final={r.url}")
+            print("HEAD:", body[:500].replace("\n", " "))
+            for h in list(dict.fromkeys(hint.findall(body.replace("\\/", "/"))))[:30]:
+                print("  hint:", h[:200])
+            for h in list(dict.fromkeys(src.findall(body)))[:25]:
+                print("  script:", h[:200])
+        except Exception as e:
+            print(f"\n=== {u}\nERROR {type(e).__name__}: {e}"[:400])
+    return 0
+
+
 def _emit(md: str) -> None:
     print(md)
     path = os.environ.get("GITHUB_STEP_SUMMARY")
@@ -283,6 +304,8 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("test-notify", help="send a sample alert to your phone")
     d = sub.add_parser("discover", help="find which public board a company uses")
     d.add_argument("names", nargs="+")
+    pr = sub.add_parser("probe", help="debug: show what a URL returns from here")
+    pr.add_argument("urls", nargs="+")
     a = p.parse_args(argv)
     if a.cmd in (None, "run"):
         return cmd_run()
@@ -292,6 +315,8 @@ def main(argv: list[str] | None = None) -> int:
         return cmd_test_notify()
     if a.cmd == "discover":
         return cmd_discover(a.names)
+    if a.cmd == "probe":
+        return cmd_probe(a.urls)
     return 2
 
 
