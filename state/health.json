@@ -264,8 +264,8 @@
 "last_ok": null
 },
 "workday:PayPal": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-16T22:00Z",
+"error": null,
+"last_ok": "2026-11-16T23:00Z",
 "roles": 0
 },
 "workday:Postman": {
