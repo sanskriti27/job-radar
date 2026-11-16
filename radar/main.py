@@ -120,6 +120,27 @@ def due_sources(srcs: list[dict]) -> list[dict]:
     return due
 
 
+HEALTH_PATH = ROOT / "state" / "health.json"
+
+
+def record_health(results: dict, errors: dict) -> None:
+    """Per-board 'last worked' hour and latest error, so a board that keeps failing is visible in the repo."""
+    import json
+    try:
+        health = json.loads(HEALTH_PATH.read_text())
+    except (OSError, ValueError):
+        health = {}
+    hour = time.strftime("%Y-%m-%dT%H:00Z", time.gmtime())
+    for key, jobs in results.items():
+        health[key] = {"last_ok": hour, "roles": len(jobs) // 25 * 25, "error": None}
+    for key, err in errors.items():
+        health[key] = {**health.get(key, {"last_ok": None}), "error": err.split(" for url")[0][:80]}
+    try:
+        HEALTH_PATH.write_text(json.dumps(health, indent=0, sort_keys=True) + "\n")
+    except OSError:
+        pass
+
+
 # ---------- filtering ----------
 
 def shortlist(jobs: list[Job], title_ok: TitleFilter, max_age_h: float) -> list[Job]:
@@ -160,6 +181,7 @@ def cmd_run() -> int:
     srcs, unresolved = resolve_sources(watch, state)
     polled = due_sources(srcs)
     results, errors = fetch_all(polled)
+    record_health(results, errors)
 
     fresh: list[Job] = []
     seeded_now = []

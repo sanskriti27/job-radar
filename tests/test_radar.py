@@ -132,6 +132,7 @@ def env(tmp_path, monkeypatch):
     board = {"jobs": []}
     monkeypatch.setattr(main, "STATE_PATH", tmp_path / "seen.json")
     monkeypatch.setattr(main, "THROTTLE_PATH", tmp_path / "throttle.json")
+    monkeypatch.setattr(main, "HEALTH_PATH", tmp_path / "health.json")
     monkeypatch.setattr(main, "load_config", lambda: (
         {"pinned": [{"name": "Acme", "ats": "fake"}], "auto": []}, FILT, "profile"))
     monkeypatch.setitem(sources.FETCHERS, "fake", lambda company, **_: list(board["jobs"]))
