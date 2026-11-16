@@ -314,3 +314,17 @@ def test_gemini_overloaded_tries_next_model_and_senior_not_alerted_unscored(env,
     board["jobs"] = [mk(1), mk(2, title="Senior Software Engineer"), mk(3)]
     main.cmd_run()                      # env stubs scoring to return nothing = Gemini down
     assert [j.job_id for j, _ in sent] == ["3"]
+
+
+def test_atlassian_and_oracle(monkeypatch):
+    monkeypatch.setattr(http, "get_json", lambda url, params=None, timeout=0: [
+        {"id": 27339, "title": "Software Engineer II", "locations": ["Bengaluru - India - Bengaluru", "Remote - India - Remote"],
+         "portalJobPost": {"portalUrl": "https://careers-apac-atlassian.icims.com/jobs/27339/x/job", "id": 27339},
+         "overview": "<p>Java</p>"}])
+    [j] = sources.fetch_atlassian()
+    assert location_verdict(j) == "yes" and j.url.endswith("/27339/x/job") and j.description == "Java"
+    monkeypatch.setattr(http, "get_json", lambda url, params=None, timeout=0: {"items": [{"requisitionList": [
+        {"Id": "154321", "Title": "Software Engineer II", "PostedDate": "2026-11-16", "PrimaryLocation": "Bangalore, Karnataka, India",
+         "PrimaryLocationCountry": "IN", "secondaryLocations": [{"Name": "Hyderabad, India", "CountryCode": "IN"}]}]}]})
+    [j] = sources.fetch_oracle("Uber", host="h", site="UberCareers")
+    assert j.url == "https://h/hcmUI/CandidateExperience/en/sites/UberCareers/job/154321" and "Hyderabad" in j.location

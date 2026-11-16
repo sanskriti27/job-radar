@@ -433,6 +433,61 @@ def fetch_recruitee(company: str, slug: str, **_) -> list[Job]:
     return jobs
 
 
+# ---------- Atlassian (own listings feed) ----------
+
+def fetch_atlassian(company: str = "Atlassian", **_) -> list[Job]:
+    data = http.get_json("https://www.atlassian.com/endpoint/careers/listings", timeout=40)
+    jobs = []
+    for j in data if isinstance(data, list) else []:
+        jid = j.get("id") or (j.get("portalJobPost") or {}).get("id")
+        if not jid:
+            continue
+        locs = [str(l) for l in (j.get("locations") or [])]
+        jobs.append(Job(
+            source="atlassian", company=company, job_id=str(jid),
+            title=(j.get("title") or "").strip(),
+            location=" | ".join(locs),
+            url=(j.get("portalJobPost") or {}).get("portalUrl")
+                or f"https://www.atlassian.com/company/careers/details/{jid}",
+            remote=any("remote" in l.lower() for l in locs) or None,
+            description=html_to_text(" ".join(str(j.get(k) or "") for k in
+                                              ("overview", "responsibilities", "qualifications")))[:6000],
+        ))
+    return jobs
+
+
+# ---------- Oracle Recruiting Cloud (Uber and others) ----------
+
+def fetch_oracle(company: str, host: str, site: str, search: str = "engineer", pages: int = 2, **_) -> list[Job]:
+    jobs = []
+    for page in range(pages):
+        finder = (f"findReqs;siteNumber={site},keyword={quote(search)},sortBy=POSTING_DATES_DESC,"
+                  f"limit=100,offset={page * 100}")
+        data = http.get_json(f"https://{host}/hcmRestApi/resources/latest/recruitingCEJobRequisitions"
+                             f"?onlyData=true&expand=requisitionList.secondaryLocations&finder={finder}", timeout=40)
+        reqs = ((data.get("items") or [{}])[0]).get("requisitionList") or []
+        for j in reqs:
+            jid = str(j.get("Id") or "")
+            if not jid:
+                continue
+            secondary = [x.get("Name", "") for x in (j.get("secondaryLocations") or [])]
+            countries = [j.get("PrimaryLocationCountry")] + [x.get("CountryCode") for x in (j.get("secondaryLocations") or [])]
+            jobs.append(Job(
+                source="oracle", company=company, job_id=jid,
+                title=(j.get("Title") or "").strip(),
+                location=" | ".join(l for l in [j.get("PrimaryLocation") or ""] + secondary if l),
+                url=f"https://{host}/hcmUI/CandidateExperience/en/sites/{site}/job/{jid}",
+                remote=("remote" in str(j.get("WorkplaceType") or j.get("WorkplaceTypeCode") or "").lower()) or None,
+                posted_at=parse_iso(j.get("PostedDate")),
+                description=html_to_text(" ".join(str(j.get(k) or "") for k in
+                                                  ("ShortDescriptionStr", "ExternalQualificationsStr", "ExternalResponsibilitiesStr"))),
+                country_codes=[c for c in countries if c],
+            ))
+        if len(reqs) < 100:
+            break
+    return jobs
+
+
 # ---------- registry ----------
 
 FETCHERS = {
@@ -447,6 +502,8 @@ FETCHERS = {
     "rippling": fetch_rippling,
     "workable": fetch_workable,
     "recruitee": fetch_recruitee,
+    "atlassian": fetch_atlassian,
+    "oracle": fetch_oracle,
 }
 
 ENRICHERS = {

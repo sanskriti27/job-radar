@@ -92,7 +92,7 @@ def fetch_all(srcs: list[dict]) -> tuple[dict[str, list[Job]], dict[str, str]]:
 
 
 # Sources that block when polled too often are read at most this often (minutes) when the radar loops.
-MIN_INTERVAL_MIN = {"workday": 12, "google": 8, "microsoft": 8}
+MIN_INTERVAL_MIN = {"workday": 12, "google": 8, "microsoft": 8, "atlassian": 6, "oracle": 6}
 THROTTLE_PATH = ROOT / "state" / "throttle.json"   # not committed; lives for the length of one loop job
 
 
@@ -280,8 +280,33 @@ def cmd_probe(urls: list[str]) -> int:
             print("HEAD:", body[:500].replace("\n", " "))
             for h in list(dict.fromkeys(hint.findall(body.replace("\\/", "/"))))[:30]:
                 print("  hint:", h[:200])
-            for h in list(dict.fromkeys(src.findall(body)))[:25]:
-                print("  script:", h[:200])
+            if "json" in (r.headers.get("content-type") or ""):
+                import json as _json
+                def cut(o, d=0):
+                    if isinstance(o, dict):
+                        return {k: cut(v, d + 1) for k, v in list(o.items())[:40]}
+                    if isinstance(o, list):
+                        return [cut(v, d + 1) for v in o[:1]] + ([f"…{len(o)} items"] if len(o) > 1 else [])
+                    return o[:70] if isinstance(o, str) else o
+                try:
+                    print("JSON:", _json.dumps(cut(r.json()))[:3500])
+                except ValueError:
+                    pass
+                continue
+            kw = re.compile(r""".{0,90}(?:greenhouse|lever\.co|ashbyhq|darwinbox|keka\.com|myworkday|eightfold|icims|"""
+                            r"""kula\.ai|zohorecruit|freshteam|turbohire|peoplestrong|oraclecloud|smartrecruiters|"""
+                            r"""job-openings|jobOpenings|/jobs|openings\b|positions\b).{0,140}""", re.I)
+            from urllib.parse import urljoin
+            texts = [("page", body)]
+            for h in list(dict.fromkeys(src.findall(body)))[:40]:
+                try:
+                    texts.append((h[-50:], http._session.get(urljoin(r.url, h), timeout=25).text))
+                except Exception:
+                    pass
+            for name, t in texts:
+                hits = [m for m in dict.fromkeys(kw.findall(t)) if re.search(r"https?:|fetch|axios|api|\.json", m, re.I)]
+                for m in hits[:8]:
+                    print(f"  [{name}] {m.strip()[:230]}")
         except Exception as e:
             print(f"\n=== {u}\nERROR {type(e).__name__}: {e}"[:400])
     return 0
