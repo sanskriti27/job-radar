@@ -87,7 +87,7 @@
 "greenhouse:GitLab": {
 "error": null,
 "last_ok": "2026-11-16T22:00Z",
-"roles": 250
+"roles": 225
 },
 "greenhouse:Glance": {
 "error": null,
@@ -255,7 +255,7 @@
 "roles": 25
 },
 "workday:Mastercard": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
+"error": null,
 "last_ok": "2026-11-16T22:00Z",
 "roles": 25
 },
