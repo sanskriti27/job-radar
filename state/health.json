@@ -112,7 +112,7 @@
 "greenhouse:MongoDB": {
 "error": null,
 "last_ok": "2026-11-17T00:00Z",
-"roles": 375
+"roles": 400
 },
 "greenhouse:Observe.AI": {
 "error": null,
@@ -270,8 +270,8 @@
 "roles": 0
 },
 "workday:Postman": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-16T23:00Z",
+"error": null,
+"last_ok": "2026-11-17T00:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
