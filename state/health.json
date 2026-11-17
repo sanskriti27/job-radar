@@ -71,12 +71,12 @@
 },
 "atlassian:Atlassian": {
 "error": null,
-"last_ok": "2026-11-17T10:00Z",
+"last_ok": "2026-11-17T11:00Z",
 "roles": 250
 },
 "google:Google": {
 "error": null,
-"last_ok": "2026-11-17T10:00Z",
+"last_ok": "2026-11-17T11:00Z",
 "roles": 0
 },
 "greenhouse:Abnormal Security": {
@@ -255,7 +255,7 @@
 "roles": 25
 },
 "lever:Meesho": {
-"error": "HTTPError: 500 Server Error: Internal Server Error",
+"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 25
 },
@@ -276,12 +276,12 @@
 },
 "microsoft:Microsoft": {
 "error": null,
-"last_ok": "2026-11-17T10:00Z",
+"last_ok": "2026-11-17T11:00Z",
 "roles": 0
 },
 "oracle:Uber": {
 "error": null,
-"last_ok": "2026-11-17T10:00Z",
+"last_ok": "2026-11-17T11:00Z",
 "roles": 200
 },
 "rippling:Rippling": {
