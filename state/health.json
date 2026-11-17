@@ -240,32 +240,32 @@
 "roles": 375
 },
 "lever:CRED": {
-"error": "HTTPError: 502 Server Error: Bad Gateway",
+"error": "HTTPError: 500 Server Error: Internal Server Error",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 0
 },
 "lever:Fi": {
-"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
+"error": "HTTPError: 500 Server Error: Internal Server Error",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 0
 },
 "lever:Hevo Data": {
-"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
+"error": "HTTPError: 500 Server Error: Internal Server Error",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 25
 },
 "lever:Meesho": {
-"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
+"error": "HTTPError: 500 Server Error: Internal Server Error",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 25
 },
 "lever:MindTickle": {
-"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
+"error": "HTTPError: 500 Server Error: Internal Server Error",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 0
 },
 "lever:Very Good Security": {
-"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
+"error": "HTTPError: 500 Server Error: Internal Server Error",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 0
 },
