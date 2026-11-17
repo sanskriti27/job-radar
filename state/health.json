@@ -240,17 +240,17 @@
 "roles": 375
 },
 "lever:CRED": {
-"error": "HTTPError: 504 Server Error: Gateway Time-out",
+"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 0
 },
 "lever:Fi": {
-"error": "HTTPError: 504 Server Error: Gateway Time-out",
+"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 0
 },
 "lever:Hevo Data": {
-"error": "HTTPError: 504 Server Error: Gateway Time-out",
+"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 25
 },
@@ -260,17 +260,17 @@
 "roles": 25
 },
 "lever:MindTickle": {
-"error": "HTTPError: 500 Server Error: Internal Server Error",
+"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 0
 },
 "lever:Very Good Security": {
-"error": "HTTPError: 502 Server Error: Bad Gateway",
+"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 0
 },
 "lever:Zeta": {
-"error": "HTTPError: 500 Server Error: Internal Server Error",
+"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 25
 },
@@ -340,8 +340,8 @@
 "roles": 25
 },
 "workday:Mastercard": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-17T10:00Z",
+"error": null,
+"last_ok": "2026-11-17T11:00Z",
 "roles": 25
 },
 "workday:NVIDIA": {
@@ -350,8 +350,8 @@
 "roles": 25
 },
 "workday:PayPal": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-17T10:00Z",
+"error": null,
+"last_ok": "2026-11-17T11:00Z",
 "roles": 0
 },
 "workday:Postman": {
@@ -365,8 +365,8 @@
 "roles": 25
 },
 "workday:Target": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-17T10:00Z",
+"error": null,
+"last_ok": "2026-11-17T11:00Z",
 "roles": 25
 }
 }
