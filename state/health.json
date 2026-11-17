@@ -250,12 +250,12 @@
 "roles": 0
 },
 "lever:Hevo Data": {
-"error": "HTTPError: 500 Server Error: Internal Server Error",
+"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 25
 },
 "lever:Meesho": {
-"error": "HTTPError: 500 Server Error: Internal Server Error",
+"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 25
 },
@@ -270,7 +270,7 @@
 "roles": 0
 },
 "lever:Zeta": {
-"error": "HTTPError: 500 Server Error: Internal Server Error",
+"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 25
 },
@@ -335,12 +335,12 @@
 "roles": 0
 },
 "workday:Adobe": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 25
 },
 "workday:Mastercard": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
+"error": null,
 "last_ok": "2026-11-17T10:00Z",
 "roles": 25
 },
@@ -350,8 +350,8 @@
 "roles": 25
 },
 "workday:PayPal": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-17T08:00Z",
+"error": null,
+"last_ok": "2026-11-17T10:00Z",
 "roles": 0
 },
 "workday:Postman": {
@@ -365,7 +365,7 @@
 "roles": 25
 },
 "workday:Target": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-17T10:00Z",
 "roles": 25
 }
