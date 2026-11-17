@@ -167,7 +167,7 @@
 "greenhouse:MongoDB": {
 "error": null,
 "last_ok": "2026-11-17T09:00Z",
-"roles": 400
+"roles": 375
 },
 "greenhouse:Observe.AI": {
 "error": null,
