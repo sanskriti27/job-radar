@@ -350,7 +350,7 @@
 "roles": 25
 },
 "workday:PayPal": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-17T14:00Z",
 "roles": 0
 },
@@ -360,8 +360,8 @@
 "roles": 25
 },
 "workday:Salesforce": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-17T13:00Z",
+"error": null,
+"last_ok": "2026-11-17T14:00Z",
 "roles": 25
 },
 "workday:Target": {
