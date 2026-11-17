@@ -4,7 +4,17 @@
 "last_ok": "2026-11-17T06:00Z",
 "roles": 100
 },
+"ashby:Appcues": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 0
+},
 "ashby:Atlan": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 0
+},
+"ashby:Buffer": {
 "error": null,
 "last_ok": "2026-11-17T06:00Z",
 "roles": 0
@@ -14,7 +24,27 @@
 "last_ok": "2026-11-17T06:00Z",
 "roles": 25
 },
+"ashby:Constructor": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 25
+},
+"ashby:Contra": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 0
+},
+"ashby:Docker": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 50
+},
 "ashby:Navi": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 0
+},
+"ashby:Patreon": {
 "error": null,
 "last_ok": "2026-11-17T06:00Z",
 "roles": 0
@@ -41,18 +71,33 @@
 },
 "atlassian:Atlassian": {
 "error": null,
-"last_ok": "2026-11-17T05:00Z",
+"last_ok": "2026-11-17T06:00Z",
 "roles": 250
 },
 "google:Google": {
 "error": null,
-"last_ok": "2026-11-17T05:00Z",
+"last_ok": "2026-11-17T06:00Z",
 "roles": 0
 },
 "greenhouse:Abnormal Security": {
 "error": null,
 "last_ok": "2026-11-17T06:00Z",
 "roles": 75
+},
+"greenhouse:Block": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 175
+},
+"greenhouse:Canonical": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 300
+},
+"greenhouse:Cloudbeds": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 25
 },
 "greenhouse:Cloudflare": {
 "error": null,
@@ -84,6 +129,11 @@
 "last_ok": "2026-11-17T06:00Z",
 "roles": 375
 },
+"greenhouse:Faire": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 50
+},
 "greenhouse:GitLab": {
 "error": null,
 "last_ok": "2026-11-17T06:00Z",
@@ -108,6 +158,11 @@
 "error": null,
 "last_ok": "2026-11-17T06:00Z",
 "roles": 75
+},
+"greenhouse:LogicGate": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 0
 },
 "greenhouse:MongoDB": {
 "error": null,
@@ -154,6 +209,26 @@
 "last_ok": "2026-11-17T06:00Z",
 "roles": 100
 },
+"greenhouse:Upstart": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 75
+},
+"greenhouse:Upwork": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 0
+},
+"greenhouse:UserGems": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 0
+},
+"greenhouse:Workera": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 0
+},
 "greenhouse:Zenoti": {
 "error": null,
 "last_ok": "2026-11-17T06:00Z",
@@ -189,6 +264,11 @@
 "last_ok": "2026-11-17T06:00Z",
 "roles": 0
 },
+"lever:Very Good Security": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 0
+},
 "lever:Zeta": {
 "error": null,
 "last_ok": "2026-11-17T06:00Z",
@@ -196,12 +276,12 @@
 },
 "microsoft:Microsoft": {
 "error": null,
-"last_ok": "2026-11-17T05:00Z",
+"last_ok": "2026-11-17T06:00Z",
 "roles": 0
 },
 "oracle:Uber": {
 "error": null,
-"last_ok": "2026-11-17T05:00Z",
+"last_ok": "2026-11-17T06:00Z",
 "roles": 200
 },
 "rippling:Rippling": {
@@ -249,14 +329,19 @@
 "last_ok": "2026-11-17T06:00Z",
 "roles": 25
 },
+"workable:Awesome Motive": {
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
+"roles": 0
+},
 "workday:Adobe": {
 "error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-17T05:00Z",
 "roles": 25
 },
 "workday:Mastercard": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-17T05:00Z",
+"error": null,
+"last_ok": "2026-11-17T06:00Z",
 "roles": 25
 },
 "workday:NVIDIA": {
@@ -271,12 +356,12 @@
 },
 "workday:Postman": {
 "error": null,
-"last_ok": "2026-11-17T05:00Z",
+"last_ok": "2026-11-17T06:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
 "error": null,
-"last_ok": "2026-11-17T05:00Z",
+"last_ok": "2026-11-17T06:00Z",
 "roles": 25
 },
 "workday:Target": {
