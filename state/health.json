@@ -340,13 +340,13 @@
 "roles": 0
 },
 "workday:Mastercard": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-17T19:00Z",
 "roles": 25
 },
 "workday:NVIDIA": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-17T16:00Z",
+"error": null,
+"last_ok": "2026-11-17T19:00Z",
 "roles": 25
 },
 "workday:PayPal": {
