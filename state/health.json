@@ -237,7 +237,7 @@
 "greenhouse:Zscaler": {
 "error": null,
 "last_ok": "2026-11-17T19:00Z",
-"roles": 350
+"roles": 375
 },
 "lever:CRED": {
 "error": null,
@@ -355,8 +355,8 @@
 "roles": 0
 },
 "workday:Postman": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-17T17:00Z",
+"error": null,
+"last_ok": "2026-11-17T19:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
