@@ -41,12 +41,12 @@
 },
 "atlassian:Atlassian": {
 "error": null,
-"last_ok": "2026-11-17T03:00Z",
+"last_ok": "2026-11-17T04:00Z",
 "roles": 250
 },
 "google:Google": {
 "error": null,
-"last_ok": "2026-11-17T03:00Z",
+"last_ok": "2026-11-17T04:00Z",
 "roles": 0
 },
 "greenhouse:Abnormal Security": {
@@ -196,12 +196,12 @@
 },
 "microsoft:Microsoft": {
 "error": null,
-"last_ok": "2026-11-17T03:00Z",
+"last_ok": "2026-11-17T04:00Z",
 "roles": 0
 },
 "oracle:Uber": {
 "error": null,
-"last_ok": "2026-11-17T03:00Z",
+"last_ok": "2026-11-17T04:00Z",
 "roles": 200
 },
 "rippling:Rippling": {
