@@ -260,8 +260,8 @@
 "roles": 25
 },
 "lever:MindTickle": {
-"error": "ReadTimeout: HTTPSConnectionPool(host='api.lever.co', port=443): Read timed out.",
-"last_ok": "2026-11-18T17:00Z",
+"error": null,
+"last_ok": "2026-11-18T18:00Z",
 "roles": 0
 },
 "lever:Very Good Security": {
