@@ -127,7 +127,7 @@
 "greenhouse:Elastic": {
 "error": null,
 "last_ok": "2026-11-18T17:00Z",
-"roles": 350
+"roles": 375
 },
 "greenhouse:Faire": {
 "error": null,
@@ -335,12 +335,12 @@
 "roles": 0
 },
 "workday:Adobe": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-18T16:00Z",
+"error": null,
+"last_ok": "2026-11-18T17:00Z",
 "roles": 0
 },
 "workday:Mastercard": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-18T16:00Z",
 "roles": 25
 },
@@ -350,13 +350,13 @@
 "roles": 25
 },
 "workday:PayPal": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-18T16:00Z",
+"error": null,
+"last_ok": "2026-11-18T17:00Z",
 "roles": 0
 },
 "workday:Postman": {
 "error": null,
-"last_ok": "2026-11-18T16:00Z",
+"last_ok": "2026-11-18T17:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
@@ -365,8 +365,8 @@
 "roles": 25
 },
 "workday:Target": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-18T16:00Z",
+"error": null,
+"last_ok": "2026-11-18T17:00Z",
 "roles": 25
 }
 }
