@@ -71,12 +71,12 @@
 },
 "atlassian:Atlassian": {
 "error": null,
-"last_ok": "2026-11-18T21:00Z",
+"last_ok": "2026-11-18T22:00Z",
 "roles": 250
 },
 "google:Google": {
 "error": null,
-"last_ok": "2026-11-18T21:00Z",
+"last_ok": "2026-11-18T22:00Z",
 "roles": 0
 },
 "greenhouse:Abnormal Security": {
@@ -112,7 +112,7 @@
 "greenhouse:Databricks": {
 "error": null,
 "last_ok": "2026-11-18T22:00Z",
-"roles": 875
+"roles": 900
 },
 "greenhouse:Datadog": {
 "error": null,
@@ -276,12 +276,12 @@
 },
 "microsoft:Microsoft": {
 "error": null,
-"last_ok": "2026-11-18T21:00Z",
+"last_ok": "2026-11-18T22:00Z",
 "roles": 0
 },
 "oracle:Uber": {
 "error": null,
-"last_ok": "2026-11-18T21:00Z",
+"last_ok": "2026-11-18T22:00Z",
 "roles": 200
 },
 "rippling:Rippling": {
