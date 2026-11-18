@@ -112,7 +112,7 @@
 "greenhouse:Databricks": {
 "error": null,
 "last_ok": "2026-11-18T22:00Z",
-"roles": 900
+"roles": 875
 },
 "greenhouse:Datadog": {
 "error": null,
