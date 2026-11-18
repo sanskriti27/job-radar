@@ -137,7 +137,7 @@
 "greenhouse:GitLab": {
 "error": null,
 "last_ok": "2026-11-18T23:00Z",
-"roles": 250
+"roles": 225
 },
 "greenhouse:Glance": {
 "error": null,
