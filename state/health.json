@@ -355,8 +355,8 @@
 "roles": 0
 },
 "workday:Postman": {
-"error": "ConnectTimeout: HTTPSConnectionPool(host='postman.wd108.myworkdayjobs.com', port",
-"last_ok": "2026-11-19T10:00Z",
+"error": null,
+"last_ok": "2026-11-19T11:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
