@@ -76,7 +76,7 @@
 },
 "google:Google": {
 "error": null,
-"last_ok": "2026-11-19T12:00Z",
+"last_ok": "2026-11-19T13:00Z",
 "roles": 0
 },
 "greenhouse:Abnormal Security": {
@@ -276,7 +276,7 @@
 },
 "microsoft:Microsoft": {
 "error": null,
-"last_ok": "2026-11-19T12:00Z",
+"last_ok": "2026-11-19T13:00Z",
 "roles": 0
 },
 "oracle:Uber": {
