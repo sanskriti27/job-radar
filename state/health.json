@@ -340,7 +340,7 @@
 "roles": 0
 },
 "workday:Mastercard": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-19T05:00Z",
 "roles": 25
 },
@@ -350,18 +350,18 @@
 "roles": 25
 },
 "workday:PayPal": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-19T04:00Z",
+"error": null,
+"last_ok": "2026-11-19T05:00Z",
 "roles": 0
 },
 "workday:Postman": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-19T04:00Z",
+"error": null,
+"last_ok": "2026-11-19T05:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-19T04:00Z",
+"error": null,
+"last_ok": "2026-11-19T05:00Z",
 "roles": 25
 },
 "workday:Target": {
