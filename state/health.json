@@ -287,7 +287,7 @@
 "rippling:Rippling": {
 "error": null,
 "last_ok": "2026-11-19T17:00Z",
-"roles": 675
+"roles": 700
 },
 "rippling:ThoughtSpot": {
 "error": null,
@@ -335,12 +335,12 @@
 "roles": 0
 },
 "workday:Adobe": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-19T16:00Z",
+"error": null,
+"last_ok": "2026-11-19T17:00Z",
 "roles": 0
 },
 "workday:Mastercard": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-19T17:00Z",
 "roles": 25
 },
