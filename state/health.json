@@ -355,7 +355,7 @@
 "roles": 0
 },
 "workday:Postman": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
+"error": "ConnectTimeout: HTTPSConnectionPool(host='postman.wd108.myworkdayjobs.com', port",
 "last_ok": "2026-11-19T10:00Z",
 "roles": 25
 },
