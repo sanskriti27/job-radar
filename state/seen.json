@@ -26,7 +26,7 @@
 },
 "Ather Energy": {
 "ats": null,
-"checked": "2026-11-13"
+"checked": "2026-11-20"
 },
 "Atlan": {
 "ats": "ashby",
@@ -167,8 +167,10 @@
 "checked": "2026-11-17"
 },
 "DeepSource": {
-"ats": null,
-"checked": "2026-11-13"
+"ats": "workable",
+"checked": "2026-11-20",
+"count": 29,
+"slug": "deepsource"
 },
 "Deltek": {
 "ats": null,
@@ -236,7 +238,7 @@
 },
 "Fyle": {
 "ats": null,
-"checked": "2026-11-13"
+"checked": "2026-11-20"
 },
 "GitLab": {
 "ats": "greenhouse",
@@ -332,7 +334,7 @@
 },
 "Kapture CX": {
 "ats": null,
-"checked": "2026-11-13"
+"checked": "2026-11-20"
 },
 "Keka": {
 "ats": null,
@@ -343,8 +345,10 @@
 "checked": "2026-11-20"
 },
 "Leena AI": {
-"ats": null,
-"checked": "2026-11-13"
+"ats": "workable",
+"checked": "2026-11-20",
+"count": 16,
+"slug": "leena-ai"
 },
 "Lenskart": {
 "ats": null,
@@ -358,7 +362,7 @@
 },
 "M2P Fintech": {
 "ats": null,
-"checked": "2026-11-13"
+"checked": "2026-11-20"
 },
 "Meesho": {
 "ats": "lever",
@@ -402,7 +406,7 @@
 },
 "OneCard": {
 "ats": null,
-"checked": "2026-11-13"
+"checked": "2026-11-20"
 },
 "Patreon": {
 "ats": "ashby",
@@ -454,7 +458,7 @@
 },
 "Rocketlane": {
 "ats": null,
-"checked": "2026-11-13"
+"checked": "2026-11-20"
 },
 "Rubrik": {
 "ats": "greenhouse",
@@ -514,7 +518,7 @@
 },
 "Spinny": {
 "ats": null,
-"checked": "2026-11-13"
+"checked": "2026-11-20"
 },
 "Sprinklr": {
 "ats": null,
@@ -522,7 +526,7 @@
 },
 "Sprinto": {
 "ats": null,
-"checked": "2026-11-13"
+"checked": "2026-11-20"
 },
 "Stripe": {
 "ats": "greenhouse",
@@ -550,7 +554,7 @@
 },
 "Toplyne": {
 "ats": null,
-"checked": "2026-11-13"
+"checked": "2026-11-20"
 },
 "Twilio": {
 "ats": "greenhouse",
@@ -612,7 +616,7 @@
 },
 "Vymo": {
 "ats": null,
-"checked": "2026-11-13"
+"checked": "2026-11-20"
 },
 "Whatfix": {
 "ats": "smartrecruiters",
@@ -662,7 +666,7 @@
 },
 "Zluri": {
 "ats": null,
-"checked": "2026-11-13"
+"checked": "2026-11-20"
 },
 "Zscaler": {
 "ats": "greenhouse",
@@ -751,7 +755,9 @@
 "greenhouse:Cloudbeds",
 "ashby:Contra",
 "workable:Awesome Motive",
-"recruitee:Gong"
+"recruitee:Gong",
+"workable:Leena AI",
+"workable:DeepSource"
 ],
 "seen": {
 "amazon:amazon:10560180": "2026-11-15T14:22Z",
@@ -9994,6 +10000,40 @@
 "smartrecruiters:wise:744000162551406": "2026-11-19T16:07Z",
 "smartrecruiters:wise:744000162552583": "2026-11-19T16:04Z",
 "workable:awesome motive:EAE33061D1": "2026-11-17T06:07Z",
+"workable:deepsource:07E118477A": "2026-11-20T00:04Z",
+"workable:deepsource:0C99B748E0": "2026-11-20T00:04Z",
+"workable:deepsource:167990860D": "2026-11-20T00:04Z",
+"workable:deepsource:209F7144F2": "2026-11-20T00:04Z",
+"workable:deepsource:31CB088270": "2026-11-20T00:04Z",
+"workable:deepsource:470FA51232": "2026-11-20T00:04Z",
+"workable:deepsource:49FD467145": "2026-11-20T00:04Z",
+"workable:deepsource:4C635C4B2F": "2026-11-20T00:04Z",
+"workable:deepsource:55BEA387E9": "2026-11-20T00:04Z",
+"workable:deepsource:58F71AD3CD": "2026-11-20T00:04Z",
+"workable:deepsource:5B49F8EE88": "2026-11-20T00:04Z",
+"workable:deepsource:664D6219FC": "2026-11-20T00:04Z",
+"workable:deepsource:66624240FB": "2026-11-20T00:04Z",
+"workable:deepsource:67A41ABF5A": "2026-11-20T00:04Z",
+"workable:deepsource:67A5A6E8CE": "2026-11-20T00:04Z",
+"workable:deepsource:89D9C01FD5": "2026-11-20T00:04Z",
+"workable:deepsource:8C7F2B1331": "2026-11-20T00:04Z",
+"workable:deepsource:AA8D386C7B": "2026-11-20T00:04Z",
+"workable:deepsource:B8791C74B2": "2026-11-20T00:04Z",
+"workable:deepsource:E1B0974DD5": "2026-11-20T00:04Z",
+"workable:deepsource:F3B6A467E6": "2026-11-20T00:04Z",
+"workable:leena ai:01DB703E7F": "2026-11-20T00:04Z",
+"workable:leena ai:29E597FC11": "2026-11-20T00:04Z",
+"workable:leena ai:322BD9B3B5": "2026-11-20T00:04Z",
+"workable:leena ai:384B6620DB": "2026-11-20T00:04Z",
+"workable:leena ai:44B50CE019": "2026-11-20T00:04Z",
+"workable:leena ai:4BAABA31D6": "2026-11-20T00:04Z",
+"workable:leena ai:5C7CA928D2": "2026-11-20T00:04Z",
+"workable:leena ai:68D93DAEF4": "2026-11-20T00:04Z",
+"workable:leena ai:6DB727B53E": "2026-11-20T00:04Z",
+"workable:leena ai:9CBF6EB683": "2026-11-20T00:04Z",
+"workable:leena ai:9F39D55151": "2026-11-20T00:04Z",
+"workable:leena ai:D2E4D92832": "2026-11-20T00:04Z",
+"workable:leena ai:E1AEC3AA9E": "2026-11-20T00:04Z",
 "workday:adobe:R166065": "2026-11-13T16:38Z",
 "workday:adobe:R167125": "2026-11-13T16:38Z",
 "workday:adobe:R167315": "2026-11-13T16:38Z",

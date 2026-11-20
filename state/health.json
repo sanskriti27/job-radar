@@ -339,6 +339,16 @@
 "last_ok": "2026-11-20T00:00Z",
 "roles": 0
 },
+"workable:DeepSource": {
+"error": null,
+"last_ok": "2026-11-20T00:00Z",
+"roles": 25
+},
+"workable:Leena AI": {
+"error": null,
+"last_ok": "2026-11-20T00:00Z",
+"roles": 0
+},
 "workday:Adobe": {
 "error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-19T23:00Z",
