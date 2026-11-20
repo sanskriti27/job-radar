@@ -350,8 +350,8 @@
 "roles": 0
 },
 "workday:Adobe": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-20T14:00Z",
+"error": null,
+"last_ok": "2026-11-20T17:00Z",
 "roles": 0
 },
 "workday:Mastercard": {
@@ -361,7 +361,7 @@
 },
 "workday:NVIDIA": {
 "error": null,
-"last_ok": "2026-11-20T16:00Z",
+"last_ok": "2026-11-20T17:00Z",
 "roles": 25
 },
 "workday:PayPal": {
@@ -370,7 +370,7 @@
 "roles": 0
 },
 "workday:Postman": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-20T16:00Z",
 "roles": 25
 },
