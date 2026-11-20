@@ -350,8 +350,8 @@
 "roles": 0
 },
 "workday:Adobe": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-20T11:00Z",
+"error": null,
+"last_ok": "2026-11-20T12:00Z",
 "roles": 0
 },
 "workday:Mastercard": {
