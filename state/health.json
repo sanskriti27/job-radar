@@ -72,7 +72,7 @@
 "atlassian:Atlassian": {
 "error": null,
 "last_ok": "2026-11-21T10:00Z",
-"roles": 225
+"roles": 0
 },
 "google:Google": {
 "error": null,
@@ -350,13 +350,13 @@
 "roles": 0
 },
 "workday:Adobe": {
-"error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-21T06:00Z",
 "roles": 0
 },
 "workday:Mastercard": {
-"error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
-"last_ok": "2026-11-21T07:00Z",
+"error": null,
+"last_ok": "2026-11-21T10:00Z",
 "roles": 25
 },
 "workday:NVIDIA": {
@@ -365,8 +365,8 @@
 "roles": 25
 },
 "workday:PayPal": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-21T07:00Z",
+"error": null,
+"last_ok": "2026-11-21T10:00Z",
 "roles": 0
 },
 "workday:Postman": {
@@ -376,7 +376,7 @@
 },
 "workday:Salesforce": {
 "error": null,
-"last_ok": "2026-11-21T09:00Z",
+"last_ok": "2026-11-21T10:00Z",
 "roles": 25
 },
 "workday:Target": {
