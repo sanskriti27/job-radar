@@ -380,8 +380,8 @@
 "roles": 25
 },
 "workday:Target": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-21T15:00Z",
+"error": null,
+"last_ok": "2026-11-21T16:00Z",
 "roles": 25
 }
 }
