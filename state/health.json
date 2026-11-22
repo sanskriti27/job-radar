@@ -350,22 +350,22 @@
 "roles": 0
 },
 "workday:Adobe": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-22T18:00Z",
+"error": null,
+"last_ok": "2026-11-22T19:00Z",
 "roles": 0
 },
 "workday:Mastercard": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-22T19:00Z",
-"roles": 25
-},
-"workday:NVIDIA": {
 "error": null,
 "last_ok": "2026-11-22T19:00Z",
 "roles": 25
 },
-"workday:PayPal": {
+"workday:NVIDIA": {
 "error": "HTTPError: 429 Client Error: Too Many Requests",
+"last_ok": "2026-11-22T19:00Z",
+"roles": 25
+},
+"workday:PayPal": {
+"error": null,
 "last_ok": "2026-11-22T19:00Z",
 "roles": 0
 },
@@ -375,12 +375,12 @@
 "roles": 25
 },
 "workday:Salesforce": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-22T19:00Z",
 "roles": 25
 },
 "workday:Target": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-22T19:00Z",
 "roles": 25
 }
