@@ -107,7 +107,7 @@
 "greenhouse:Coinbase": {
 "error": null,
 "last_ok": "2026-11-23T22:00Z",
-"roles": 250
+"roles": 225
 },
 "greenhouse:Databricks": {
 "error": null,
@@ -355,7 +355,7 @@
 "roles": 0
 },
 "workday:Mastercard": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-23T22:00Z",
 "roles": 25
 },
@@ -370,8 +370,8 @@
 "roles": 0
 },
 "workday:Postman": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-23T21:00Z",
+"error": null,
+"last_ok": "2026-11-23T22:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
