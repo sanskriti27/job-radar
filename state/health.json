@@ -71,12 +71,12 @@
 },
 "atlassian:Atlassian": {
 "error": null,
-"last_ok": "2026-11-23T12:00Z",
+"last_ok": "2026-11-23T13:00Z",
 "roles": 225
 },
 "google:Google": {
 "error": null,
-"last_ok": "2026-11-23T12:00Z",
+"last_ok": "2026-11-23T13:00Z",
 "roles": 0
 },
 "greenhouse:Abnormal Security": {
@@ -276,12 +276,12 @@
 },
 "microsoft:Microsoft": {
 "error": null,
-"last_ok": "2026-11-23T12:00Z",
+"last_ok": "2026-11-23T13:00Z",
 "roles": 0
 },
 "oracle:Uber": {
 "error": null,
-"last_ok": "2026-11-23T12:00Z",
+"last_ok": "2026-11-23T13:00Z",
 "roles": 200
 },
 "recruitee:Gong": {
@@ -350,13 +350,13 @@
 "roles": 0
 },
 "workday:Adobe": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-23T12:00Z",
+"error": null,
+"last_ok": "2026-11-23T13:00Z",
 "roles": 0
 },
 "workday:Mastercard": {
 "error": null,
-"last_ok": "2026-11-23T12:00Z",
+"last_ok": "2026-11-23T13:00Z",
 "roles": 25
 },
 "workday:NVIDIA": {
@@ -366,17 +366,17 @@
 },
 "workday:PayPal": {
 "error": null,
-"last_ok": "2026-11-23T12:00Z",
+"last_ok": "2026-11-23T13:00Z",
 "roles": 0
 },
 "workday:Postman": {
 "error": null,
-"last_ok": "2026-11-23T12:00Z",
+"last_ok": "2026-11-23T13:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
 "error": null,
-"last_ok": "2026-11-23T12:00Z",
+"last_ok": "2026-11-23T13:00Z",
 "roles": 25
 },
 "workday:Target": {
