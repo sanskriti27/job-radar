@@ -202,7 +202,7 @@
 "greenhouse:Stripe": {
 "error": null,
 "last_ok": "2026-11-23T20:00Z",
-"roles": 775
+"roles": 750
 },
 "greenhouse:Twilio": {
 "error": null,
