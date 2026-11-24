@@ -97,7 +97,7 @@
 "greenhouse:Cloudbeds": {
 "error": null,
 "last_ok": "2026-11-24T15:00Z",
-"roles": 25
+"roles": 50
 },
 "greenhouse:Cloudflare": {
 "error": null,
