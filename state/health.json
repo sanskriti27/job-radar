@@ -360,8 +360,8 @@
 "roles": 25
 },
 "workday:NVIDIA": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-24T19:00Z",
+"error": null,
+"last_ok": "2026-11-24T20:00Z",
 "roles": 25
 },
 "workday:PayPal": {
@@ -371,7 +371,7 @@
 },
 "workday:Postman": {
 "error": null,
-"last_ok": "2026-11-24T19:00Z",
+"last_ok": "2026-11-24T20:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
