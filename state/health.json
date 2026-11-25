@@ -355,8 +355,8 @@
 "roles": 25
 },
 "workday:Mastercard": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-25T02:00Z",
+"error": null,
+"last_ok": "2026-11-25T03:00Z",
 "roles": 25
 },
 "workday:NVIDIA": {
@@ -375,13 +375,13 @@
 "roles": 25
 },
 "workday:Salesforce": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-25T03:00Z",
 "roles": 25
 },
 "workday:Target": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-25T02:00Z",
+"error": null,
+"last_ok": "2026-11-25T03:00Z",
 "roles": 25
 }
 }
