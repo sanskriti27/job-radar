@@ -71,12 +71,12 @@
 },
 "atlassian:Atlassian": {
 "error": null,
-"last_ok": "2026-11-25T17:00Z",
+"last_ok": "2026-11-25T18:00Z",
 "roles": 200
 },
 "google:Google": {
 "error": null,
-"last_ok": "2026-11-25T17:00Z",
+"last_ok": "2026-11-25T18:00Z",
 "roles": 0
 },
 "greenhouse:Abnormal Security": {
@@ -122,7 +122,7 @@
 "greenhouse:Druva": {
 "error": null,
 "last_ok": "2026-11-25T18:00Z",
-"roles": 25
+"roles": 0
 },
 "greenhouse:Elastic": {
 "error": null,
@@ -276,12 +276,12 @@
 },
 "microsoft:Microsoft": {
 "error": null,
-"last_ok": "2026-11-25T17:00Z",
+"last_ok": "2026-11-25T18:00Z",
 "roles": 0
 },
 "oracle:Uber": {
 "error": null,
-"last_ok": "2026-11-25T17:00Z",
+"last_ok": "2026-11-25T18:00Z",
 "roles": 200
 },
 "recruitee:Gong": {
