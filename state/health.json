@@ -137,7 +137,7 @@
 "greenhouse:GitLab": {
 "error": null,
 "last_ok": "2026-11-25T04:00Z",
-"roles": 250
+"roles": 225
 },
 "greenhouse:Glance": {
 "error": null,
@@ -360,17 +360,17 @@
 "roles": 25
 },
 "workday:NVIDIA": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
+"error": null,
 "last_ok": "2026-11-25T04:00Z",
 "roles": 25
 },
 "workday:PayPal": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-25T04:00Z",
 "roles": 0
 },
 "workday:Postman": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-25T04:00Z",
 "roles": 25
 },
