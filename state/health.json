@@ -71,12 +71,12 @@
 },
 "atlassian:Atlassian": {
 "error": null,
-"last_ok": "2026-11-27T17:00Z",
+"last_ok": "2026-11-27T18:00Z",
 "roles": 200
 },
 "google:Google": {
 "error": null,
-"last_ok": "2026-11-27T17:00Z",
+"last_ok": "2026-11-27T18:00Z",
 "roles": 0
 },
 "greenhouse:Abnormal Security": {
@@ -276,12 +276,12 @@
 },
 "microsoft:Microsoft": {
 "error": null,
-"last_ok": "2026-11-27T17:00Z",
+"last_ok": "2026-11-27T18:00Z",
 "roles": 0
 },
 "oracle:Uber": {
 "error": null,
-"last_ok": "2026-11-27T17:00Z",
+"last_ok": "2026-11-27T18:00Z",
 "roles": 200
 },
 "recruitee:Gong": {
