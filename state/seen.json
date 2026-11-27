@@ -22,7 +22,7 @@
 },
 "Arcesium": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Ather Energy": {
 "ats": null,
@@ -60,7 +60,7 @@
 },
 "BrowserStack": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Buffer": {
 "ats": "ashby",
@@ -92,7 +92,7 @@
 },
 "Chargebee": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Cloudbeds": {
 "ats": "greenhouse",
@@ -108,15 +108,15 @@
 },
 "Cohesity": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "CoinDCX": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "CoinSwitch": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Coinbase": {
 "ats": "greenhouse",
@@ -132,7 +132,7 @@
 },
 "Confluent": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Constructor": {
 "ats": "ashby",
@@ -148,7 +148,7 @@
 },
 "Darwinbox": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Databricks": {
 "ats": "greenhouse",
@@ -196,7 +196,7 @@
 },
 "Dream11": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Druva": {
 "ats": "greenhouse",
@@ -216,7 +216,7 @@
 },
 "Exotel": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Faire": {
 "ats": "greenhouse",
@@ -272,15 +272,15 @@
 },
 "Gupshup": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Harness": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Hasura": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Hevo Data": {
 "ats": "lever",
@@ -296,11 +296,11 @@
 },
 "INDmoney": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Icertis": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "InMobi": {
 "ats": "greenhouse",
@@ -310,7 +310,7 @@
 },
 "Innovaccer": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Intrado": {
 "ats": null,
@@ -318,7 +318,7 @@
 },
 "Intuit": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Jenius Bank": {
 "ats": null,
@@ -326,11 +326,11 @@
 },
 "Jupiter": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Juspay": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Kapture CX": {
 "ats": null,
@@ -338,11 +338,11 @@
 },
 "Keka": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "LeadSquared": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Leena AI": {
 "ats": "workable",
@@ -352,7 +352,7 @@
 },
 "Lenskart": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "LogicGate": {
 "ats": "greenhouse",
@@ -390,7 +390,7 @@
 },
 "Nutanix": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Observe.AI": {
 "ats": "greenhouse",
@@ -416,7 +416,7 @@
 },
 "Perfios": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "PhonePe": {
 "ats": null,
@@ -424,7 +424,7 @@
 },
 "Physics Wallah": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Pine Labs": {
 "ats": "greenhouse",
@@ -434,7 +434,7 @@
 },
 "Plivo": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Postman": {
 "ats": null,
@@ -446,7 +446,7 @@
 },
 "Rapido": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Rec Room": {
 "ats": null,
@@ -474,7 +474,7 @@
 },
 "Scaler": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "ServiceNow": {
 "ats": "smartrecruiters",
@@ -484,11 +484,11 @@
 },
 "Setu": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "ShareChat": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Shopify": {
 "ats": null,
@@ -518,11 +518,11 @@
 },
 "Spinny": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Sprinklr": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Sprinto": {
 "ats": null,
@@ -568,15 +568,15 @@
 },
 "Udaan": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Ultrahuman": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Uniphore": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Upstart": {
 "ats": "greenhouse",
@@ -592,7 +592,7 @@
 },
 "Urban Company": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "UserGems": {
 "ats": "greenhouse",
@@ -612,7 +612,7 @@
 },
 "Visa": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Vymo": {
 "ats": null,
@@ -646,7 +646,7 @@
 },
 "Yellow.ai": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Zenoti": {
 "ats": "greenhouse",
@@ -656,7 +656,7 @@
 },
 "Zepto": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 },
 "Zeta": {
 "ats": "lever",
@@ -676,7 +676,7 @@
 },
 "smallcase": {
 "ats": null,
-"checked": "2026-11-20"
+"checked": "2026-11-27"
 }
 },
 "discovery_version": 2,
