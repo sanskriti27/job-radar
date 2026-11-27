@@ -71,12 +71,12 @@
 },
 "atlassian:Atlassian": {
 "error": null,
-"last_ok": "2026-11-27T16:00Z",
+"last_ok": "2026-11-27T17:00Z",
 "roles": 200
 },
 "google:Google": {
 "error": null,
-"last_ok": "2026-11-27T16:00Z",
+"last_ok": "2026-11-27T17:00Z",
 "roles": 0
 },
 "greenhouse:Abnormal Security": {
@@ -192,7 +192,7 @@
 "greenhouse:Rubrik": {
 "error": null,
 "last_ok": "2026-11-27T17:00Z",
-"roles": 200
+"roles": 225
 },
 "greenhouse:Slice": {
 "error": null,
@@ -276,12 +276,12 @@
 },
 "microsoft:Microsoft": {
 "error": null,
-"last_ok": "2026-11-27T16:00Z",
+"last_ok": "2026-11-27T17:00Z",
 "roles": 0
 },
 "oracle:Uber": {
 "error": null,
-"last_ok": "2026-11-27T16:00Z",
+"last_ok": "2026-11-27T17:00Z",
 "roles": 200
 },
 "recruitee:Gong": {
@@ -355,33 +355,33 @@
 "roles": 25
 },
 "workday:Mastercard": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-27T16:00Z",
 "roles": 25
 },
 "workday:NVIDIA": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-27T16:00Z",
 "roles": 25
 },
 "workday:PayPal": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-27T16:00Z",
+"error": null,
+"last_ok": "2026-11-27T17:00Z",
 "roles": 0
 },
 "workday:Postman": {
 "error": null,
-"last_ok": "2026-11-27T16:00Z",
+"last_ok": "2026-11-27T17:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-27T16:00Z",
+"error": null,
+"last_ok": "2026-11-27T17:00Z",
 "roles": 25
 },
 "workday:Target": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-27T13:00Z",
+"error": null,
+"last_ok": "2026-11-27T17:00Z",
 "roles": 25
 }
 }
