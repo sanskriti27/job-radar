@@ -350,8 +350,8 @@
 "roles": 0
 },
 "workday:Adobe": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-27T15:00Z",
+"error": null,
+"last_ok": "2026-11-27T16:00Z",
 "roles": 25
 },
 "workday:Mastercard": {
@@ -376,7 +376,7 @@
 },
 "workday:Salesforce": {
 "error": null,
-"last_ok": "2026-11-27T15:00Z",
+"last_ok": "2026-11-27T16:00Z",
 "roles": 25
 },
 "workday:Target": {
