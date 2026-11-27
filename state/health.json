@@ -317,7 +317,7 @@
 "smartrecruiters:ServiceNow": {
 "error": null,
 "last_ok": "2026-11-27T10:00Z",
-"roles": 50
+"roles": 75
 },
 "smartrecruiters:Swiggy": {
 "error": null,
@@ -355,7 +355,7 @@
 "roles": 25
 },
 "workday:Mastercard": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-27T10:00Z",
 "roles": 25
 },
@@ -370,7 +370,7 @@
 "roles": 0
 },
 "workday:Postman": {
-"error": null,
+"error": "HTTPError: 429 Client Error: Too Many Requests",
 "last_ok": "2026-11-27T10:00Z",
 "roles": 25
 },
@@ -380,8 +380,8 @@
 "roles": 25
 },
 "workday:Target": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-27T09:00Z",
+"error": null,
+"last_ok": "2026-11-27T10:00Z",
 "roles": 25
 }
 }
