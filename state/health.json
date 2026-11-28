@@ -350,7 +350,7 @@
 "roles": 0
 },
 "workday:Adobe": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
+"error": null,
 "last_ok": "2026-11-28T04:00Z",
 "roles": 25
 },
@@ -365,7 +365,7 @@
 "roles": 25
 },
 "workday:PayPal": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
+"error": null,
 "last_ok": "2026-11-28T04:00Z",
 "roles": 0
 },
