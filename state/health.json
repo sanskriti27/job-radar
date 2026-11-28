@@ -370,13 +370,13 @@
 "roles": 0
 },
 "workday:Postman": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
-"last_ok": "2026-11-28T12:00Z",
+"error": null,
+"last_ok": "2026-11-28T13:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
 "error": null,
-"last_ok": "2026-11-28T12:00Z",
+"last_ok": "2026-11-28T13:00Z",
 "roles": 25
 },
 "workday:Target": {
