@@ -71,12 +71,12 @@
 },
 "atlassian:Atlassian": {
 "error": null,
-"last_ok": "2026-11-28T06:00Z",
+"last_ok": "2026-11-28T07:00Z",
 "roles": 200
 },
 "google:Google": {
 "error": null,
-"last_ok": "2026-11-28T06:00Z",
+"last_ok": "2026-11-28T07:00Z",
 "roles": 0
 },
 "greenhouse:Abnormal Security": {
@@ -276,12 +276,12 @@
 },
 "microsoft:Microsoft": {
 "error": null,
-"last_ok": "2026-11-28T06:00Z",
+"last_ok": "2026-11-28T07:00Z",
 "roles": 0
 },
 "oracle:Uber": {
 "error": null,
-"last_ok": "2026-11-28T06:00Z",
+"last_ok": "2026-11-28T07:00Z",
 "roles": 200
 },
 "recruitee:Gong": {
@@ -350,37 +350,37 @@
 "roles": 0
 },
 "workday:Adobe": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
+"error": "HTTPError: 500 Server Error: Internal Server Error",
 "last_ok": "2026-11-28T06:00Z",
 "roles": 25
 },
 "workday:Mastercard": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
+"error": "HTTPError: 500 Server Error: Internal Server Error",
 "last_ok": "2026-11-28T06:00Z",
 "roles": 25
 },
 "workday:NVIDIA": {
-"error": null,
+"error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
 "last_ok": "2026-11-28T06:00Z",
 "roles": 25
 },
 "workday:PayPal": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
+"error": "HTTPError: 500 Server Error: Internal Server Error",
 "last_ok": "2026-11-28T06:00Z",
 "roles": 0
 },
 "workday:Postman": {
 "error": null,
-"last_ok": "2026-11-28T06:00Z",
+"last_ok": "2026-11-28T07:00Z",
 "roles": 25
 },
 "workday:Salesforce": {
 "error": null,
-"last_ok": "2026-11-28T06:00Z",
+"last_ok": "2026-11-28T07:00Z",
 "roles": 25
 },
 "workday:Target": {
-"error": null,
+"error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
 "last_ok": "2026-11-28T06:00Z",
 "roles": 25
 }
