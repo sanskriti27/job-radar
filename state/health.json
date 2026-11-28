@@ -360,7 +360,7 @@
 "roles": 25
 },
 "workday:NVIDIA": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
+"error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
 "last_ok": "2026-11-28T06:00Z",
 "roles": 25
 },
@@ -380,7 +380,7 @@
 "roles": 25
 },
 "workday:Target": {
-"error": "HTTPError: 429 Client Error: Too Many Requests",
+"error": "JSONDecodeError: Expecting value: line 1 column 1 (char 0)",
 "last_ok": "2026-11-28T06:00Z",
 "roles": 25
 }
